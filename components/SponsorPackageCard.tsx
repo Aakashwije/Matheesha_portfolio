@@ -13,7 +13,7 @@ export default function SponsorPackageCard({
 }: Readonly<SponsorPackageCardProps>) {
   return (
     <div
-      className={`flex h-full flex-col rounded-2xl border p-6 shadow-lg shadow-black/30 ${
+      className={`hover-card hover-glow reveal-soft flex h-full flex-col rounded-2xl border p-6 shadow-lg shadow-black/30 ${
         highlighted
           ? "border-yellow-400 bg-yellow-400/10"
           : "border-white/10 bg-white/5"

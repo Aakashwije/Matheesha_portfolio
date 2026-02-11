@@ -5,7 +5,7 @@ interface StatCardProps {
 
 export default function StatCard({ value, label }: Readonly<StatCardProps>) {
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/5 p-6 text-center shadow-lg shadow-black/30 backdrop-blur">
+  <div className="hover-card reveal-soft rounded-2xl border border-white/10 bg-white/5 p-6 text-center shadow-lg shadow-black/30 backdrop-blur">
       <p className="text-3xl font-semibold text-yellow-400 md:text-4xl">
         {value}
       </p>

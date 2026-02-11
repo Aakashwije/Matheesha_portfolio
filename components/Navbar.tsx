@@ -7,13 +7,24 @@ import { navLinks } from "@/lib/siteData";
 
 export default function Navbar() {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-30 border-b border-white/10 bg-[#05060b]/80 backdrop-blur">
+  <header className="animate-slide-down sticky top-0 z-30 border-b border-white/10 bg-[#05060b]/80 backdrop-blur">
       <Container className="flex items-center justify-between py-5">
         <Link href="/" className="text-lg font-semibold text-white">
           Matheesha <span className="text-yellow-400">Wijesekara</span>
         </Link>
+        <button
+          type="button"
+          className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-200 transition hover:text-yellow-400 md:hidden"
+          onClick={() => setMobileOpen((prev) => !prev)}
+          aria-expanded={mobileOpen}
+          aria-controls="mobile-nav"
+        >
+          <span>Menu</span>
+          <span className="text-base">{mobileOpen ? "✕" : "☰"}</span>
+        </button>
         <nav className="hidden items-center gap-6 text-sm uppercase tracking-[0.2em] text-slate-300 md:flex">
           {navLinks.map((link) => {
             if (!link.children) {
@@ -73,11 +84,73 @@ export default function Navbar() {
         </nav>
         <Link
           href="/sponsors"
-          className="rounded-full border border-yellow-400/60 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-yellow-400 transition hover:bg-yellow-400 hover:text-black"
+          className="hidden rounded-full border border-yellow-400/60 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-yellow-400 transition hover:bg-yellow-400 hover:text-black md:inline-flex"
         >
           Sponsor
         </Link>
       </Container>
+      <div
+        id="mobile-nav"
+        className={`md:hidden ${
+          mobileOpen ? "block" : "hidden"
+        } border-t border-white/10 bg-[#05060b]/95 px-6 pb-6 pt-4 text-sm uppercase tracking-[0.2em] text-slate-200`}
+      >
+        <div className="flex flex-col gap-3">
+          {navLinks.map((link) =>
+            link.children ? (
+              <div key={link.href} className="space-y-2">
+                <button
+                  type="button"
+                  className="flex w-full items-center justify-between text-left transition hover:text-yellow-400"
+                  onClick={() =>
+                    setOpenDropdown(
+                      openDropdown === link.label ? null : link.label
+                    )
+                  }
+                >
+                  {link.label}
+                  <span className="text-xs">{openDropdown === link.label ? "–" : "+"}</span>
+                </button>
+                <div
+                  className={`pl-4 text-xs uppercase tracking-[0.18em] text-slate-300 ${
+                    openDropdown === link.label ? "block" : "hidden"
+                  }`}
+                >
+                  {link.children.map((child) => (
+                    <Link
+                      key={child.href}
+                      href={child.href}
+                      className="block py-2 transition hover:text-yellow-400"
+                      onClick={() => {
+                        setMobileOpen(false);
+                        setOpenDropdown(null);
+                      }}
+                    >
+                      {child.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="transition hover:text-yellow-400"
+                onClick={() => setMobileOpen(false)}
+              >
+                {link.label}
+              </Link>
+            )
+          )}
+          <Link
+            href="/sponsors"
+            className="mt-3 inline-flex w-full items-center justify-center rounded-full border border-yellow-400/60 px-4 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-yellow-400 transition hover:bg-yellow-400 hover:text-black"
+            onClick={() => setMobileOpen(false)}
+          >
+            Sponsor
+          </Link>
+        </div>
+      </div>
     </header>
   );
 }

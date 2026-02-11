@@ -20,7 +20,7 @@ export default function GalleryGrid() {
             key={image.src}
             whileHover={{ scale: 1.02 }}
             onClick={() => setActiveIndex(index)}
-            className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5"
+            className="hover-card reveal-soft group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5"
           >
             <div className="relative aspect-4/3">
               <Image
@@ -54,7 +54,7 @@ export default function GalleryGrid() {
               initial={{ scale: 0.95 }}
               animate={{ scale: 1 }}
               exit={{ scale: 0.95 }}
-              className="relative max-w-4xl overflow-hidden rounded-3xl border border-white/10 bg-[#0b0e17]"
+              className="hover-glow relative max-w-4xl overflow-hidden rounded-3xl border border-white/10 bg-[#0b0e17]"
               onClick={(event) => event.stopPropagation()}
             >
               <div className="relative aspect-16/10 w-[85vw] max-w-4xl">

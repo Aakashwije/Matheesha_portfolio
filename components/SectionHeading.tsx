@@ -14,7 +14,7 @@ export default function SectionHeading({
   action,
 }: Readonly<SectionHeadingProps>) {
   return (
-    <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+  <div className="animate-fade-up flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
       <div>
         {eyebrow ? (
           <p className="text-sm font-semibold uppercase tracking-[0.3em] text-yellow-400">

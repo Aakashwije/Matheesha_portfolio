@@ -12,7 +12,7 @@ export default function MediaCard({
   summary,
 }: Readonly<MediaCardProps>) {
   return (
-  <div className="h-full rounded-2xl border border-white/10 bg-linear-to-br from-white/5 to-white/0 p-6 shadow-lg shadow-black/30">
+  <div className="hover-card reveal-soft h-full rounded-2xl border border-white/10 bg-linear-to-br from-white/5 to-white/0 p-6 shadow-lg shadow-black/30">
       <div className="flex items-center justify-between text-xs uppercase tracking-[0.2em] text-yellow-400">
         <span>{outlet}</span>
         <span>{date}</span>

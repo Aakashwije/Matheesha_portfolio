@@ -3,7 +3,7 @@ import Container from "./Container";
 export default function Footer() {
   return (
     <footer className="border-t border-white/10 bg-[#05060b] py-10">
-      <Container className="flex flex-col gap-6 text-sm text-slate-400 md:flex-row md:items-center md:justify-between">
+  <Container className="animate-fade-in flex flex-col gap-6 text-sm text-slate-400 md:flex-row md:items-center md:justify-between">
         <div>
           <p className="text-white">Matheesha Wijesekara</p>
           <p>Sri Lankan Squash Athlete Portfolio</p>

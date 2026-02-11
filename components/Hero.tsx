@@ -64,7 +64,7 @@ export default function Hero() {
             alt="Matheesha profile"
             width={360}
             height={360}
-            className="h-72 w-72 rounded-full border border-white/20 bg-white/5 object-cover object-top shadow-2xl shadow-black/50 md:h-80 md:w-80"
+            className="animate-float-soft h-72 w-72 rounded-full border border-white/20 bg-white/5 object-cover object-top shadow-2xl shadow-black/50 md:h-80 md:w-80"
             priority
           />
         </motion.div>

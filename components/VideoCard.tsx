@@ -20,7 +20,7 @@ export default function VideoCard({
       target="_blank"
       rel="noreferrer"
       whileHover={{ y: -6 }}
-      className="group block overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-lg shadow-black/30"
+      className="hover-card reveal-soft group block overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-lg shadow-black/30"
     >
       <div className="relative aspect-video">
         <Image
