@@ -19,14 +19,19 @@ export default function Contact() {
               Matheesha Wijesekara
             </p>
             <p className="mt-2 text-sm text-slate-300">
-              matheesha.squash@gmail.com
+              <a
+                href="mailto:inokagunn@gmail.com"
+                className="transition hover:text-yellow-400"
+              >
+                inokagunn@gmail.com
+              </a>
             </p>
           </div>
           <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
             <p className="text-sm uppercase tracking-[0.2em] text-yellow-400">
-              Coach & Manager
+              Manager
             </p>
-            <p className="mt-3 text-lg font-semibold text-white">+94 77 123 4567</p>
+            <p className="mt-3 text-lg font-semibold text-white">+94 77 771 1666</p>
             <p className="mt-2 text-sm text-slate-300">
               Colombo, Sri Lanka
             </p>

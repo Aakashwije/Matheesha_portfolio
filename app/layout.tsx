@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import SplashScreen from "@/components/SplashScreen";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,6 +19,10 @@ export const metadata: Metadata = {
   title: "Matheesha Wijesekara | Sri Lankan Squash Athlete",
   description:
     "Professional squash portfolio for Matheesha Wijesekara, Sri Lanka's top U19 athlete.",
+  icons: {
+    icon: "/matheesha_logo.png",
+    apple: "/matheesha_logo.png",
+  },
 };
 
 export default function RootLayout({
@@ -28,8 +33,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
+        suppressHydrationWarning
         className={`${geistSans.variable} ${geistMono.variable} bg-[#05060b] text-white antialiased`}
       >
+        <SplashScreen />
         <Navbar />
         <main>{children}</main>
         <Footer />

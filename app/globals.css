@@ -16,6 +16,11 @@ body {
   scroll-behavior: smooth;
 }
 
+#__next-build-watcher,
+#__next-dev-indicator {
+  display: none !important;
+}
+
 @layer utilities {
   @keyframes fade-up {
     0% {
@@ -74,6 +79,49 @@ body {
 
   .animate-float-soft {
     animation: float-soft 4.5s ease-in-out infinite;
+  }
+
+  @keyframes logo-pulse {
+    0% {
+      opacity: 0.85;
+      transform: scale(0.96);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    100% {
+      opacity: 0.85;
+      transform: scale(0.96);
+    }
+  }
+
+  @keyframes dot-bounce {
+    0%,
+    100% {
+      transform: translateY(0);
+      opacity: 0.6;
+    }
+    50% {
+      transform: translateY(-6px);
+      opacity: 1;
+    }
+  }
+
+  .animate-logo-pulse {
+    animation: logo-pulse 1.8s ease-in-out infinite;
+  }
+
+  .animate-dot {
+    animation: dot-bounce 1.2s ease-in-out infinite;
+  }
+
+  .animate-dot-delay-1 {
+    animation-delay: 0.15s;
+  }
+
+  .animate-dot-delay-2 {
+    animation-delay: 0.3s;
   }
 
   @keyframes glow-pulse {
