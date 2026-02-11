@@ -57,14 +57,14 @@ export default function Hero() {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2 }}
-          className="flex w-full max-w-sm justify-center lg:max-w-md"
+          className="flex w-full max-w-md justify-center lg:max-w-lg lg:justify-end lg:pl-10"
         >
           <Image
             src="/matheesha_profile.png"
             alt="Matheesha profile"
-            width={360}
-            height={360}
-            className="animate-float-soft h-72 w-72 rounded-full border border-white/20 bg-white/5 object-cover object-top shadow-2xl shadow-black/50 md:h-80 md:w-80"
+            width={440}
+            height={440}
+            className="animate-float-soft h-80 w-80 rounded-full border border-white/20 bg-white/5 object-cover object-top shadow-2xl shadow-black/50 sm:h-96 sm:w-96"
             priority
           />
         </motion.div>
