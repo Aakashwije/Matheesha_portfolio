@@ -1,8 +1,36 @@
+import Image from "next/image";
 import Container from "@/components/Container";
 import SectionHeading from "@/components/SectionHeading";
 
 export default function SchoolGallery() {
-  const placeholders = Array.from({ length: 6 }, (_, index) => index);
+  const schoolImages = [
+    "WhatsApp Image 2026-02-11 at 10.21.18 PM.jpeg",
+    "WhatsApp Image 2026-02-11 at 10.41.38 PM.jpeg",
+    "WhatsApp Image 2026-02-11 at 10.42.23 PM.jpeg",
+    "WhatsApp Image 2026-02-11 at 10.43.12 PM.jpeg",
+    "WhatsApp Image 2026-02-11 at 10.44.26 PM.jpeg",
+    "WhatsApp Image 2026-02-11 at 10.44.48 PM.jpeg",
+    "WhatsApp Image 2026-02-11 at 10.45.07 PM.jpeg",
+    "WhatsApp Image 2026-02-11 at 9.24.23 PM (1).jpeg",
+    "WhatsApp Image 2026-02-11 at 9.24.24 PM.jpeg",
+    "WhatsApp Image 2026-02-11 at 9.24.32 PM (1).jpeg",
+    "WhatsApp Image 2026-02-11 at 9.24.32 PM.jpeg",
+    "WhatsApp Image 2026-02-11 at 9.24.40 PM (1).jpeg",
+    "WhatsApp Image 2026-02-11 at 9.26.33 PM (1).jpeg",
+    "WhatsApp Image 2026-02-11 at 9.26.33 PM (2).jpeg",
+    "WhatsApp Image 2026-02-11 at 9.26.33 PM.jpeg",
+    "WhatsApp Image 2026-02-11 at 9.26.34 PM.jpeg",
+    "WhatsApp Image 2026-02-11 at 9.26.35 PM.jpeg",
+    "WhatsApp Image 2026-02-11 at 9.36.09 PM.jpeg",
+    "WhatsApp Image 2026-02-11 at 9.36.35 PM (1).jpeg",
+    "WhatsApp Image 2026-02-11 at 9.36.35 PM (2).jpeg",
+    "WhatsApp Image 2026-02-11 at 9.36.36 PM.jpeg",
+    "WhatsApp Image 2026-02-11 at 9.42.45 PM (1).jpeg",
+    "WhatsApp Image 2026-02-11 at 9.42.45 PM (2).jpeg",
+    "WhatsApp Image 2026-02-11 at 9.42.48 PM (1).jpeg",
+    "WhatsApp Image 2026-02-11 at 9.42.48 PM (2).jpeg",
+    "WhatsApp Image 2026-02-11 at 9.42.48 PM.jpeg",
+  ];
 
   return (
     <section className="bg-[#05060b] py-16">
@@ -16,19 +44,28 @@ export default function SchoolGallery() {
           <h2 className="text-2xl font-semibold text-white">
             School Gallery Board
           </h2>
-          <p className="text-sm text-slate-300">
-            Add school match photos and achievements as they come in.
-          </p>
         </div>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {placeholders.map((index) => (
-            <div
-              key={`school-placeholder-${index}`}
-              className="flex aspect-4/3 items-center justify-center rounded-2xl border border-dashed border-white/20 bg-white/5 text-xs uppercase tracking-[0.2em] text-slate-400"
-            >
-              Add Image
-            </div>
-          ))}
+          {schoolImages.map((name) => {
+            const src = `/assets/gallery/College%20Achievements/${encodeURIComponent(
+              name
+            )}`;
+            return (
+              <div
+                key={name}
+                className="hover-card reveal-soft relative overflow-hidden rounded-2xl border border-white/10 bg-white/5"
+              >
+                <div className="relative aspect-4/3 bg-black/20">
+                  <Image
+                    src={src}
+                    alt={name}
+                    fill
+                    className="object-contain"
+                  />
+                </div>
+              </div>
+            );
+          })}
         </div>
       </Container>
     </section>

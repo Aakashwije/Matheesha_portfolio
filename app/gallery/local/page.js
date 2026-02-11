@@ -1,8 +1,27 @@
+import Image from "next/image";
 import Container from "@/components/Container";
 import SectionHeading from "@/components/SectionHeading";
 
 export default function LocalGallery() {
-  const placeholders = Array.from({ length: 6 }, (_, index) => index);
+  const localImages = [
+    "Junior National Boy Player of the Year - Matheesha.jpg",
+    "WhatsApp Image 2026-02-11 at 11.11.12 PM (1).jpeg",
+    "WhatsApp Image 2026-02-11 at 11.11.12 PM.jpeg",
+    "WhatsApp Image 2026-02-11 at 11.11.51 PM (1).jpeg",
+    "WhatsApp Image 2026-02-11 at 11.11.51 PM (2).jpeg",
+    "WhatsApp Image 2026-02-11 at 11.11.51 PM.jpeg",
+    "WhatsApp Image 2026-02-11 at 9.24.21 PM (1).jpeg",
+    "WhatsApp Image 2026-02-11 at 9.24.22 PM.jpeg",
+    "WhatsApp Image 2026-02-11 at 9.24.37 PM (1).jpeg",
+    "WhatsApp Image 2026-02-11 at 9.24.37 PM.jpeg",
+    "WhatsApp Image 2026-02-11 at 9.26.20 PM (1).jpeg",
+    "WhatsApp Image 2026-02-11 at 9.26.20 PM (2).jpeg",
+    "WhatsApp Image 2026-02-11 at 9.26.21 PM (1) - Copy.jpeg",
+    "WhatsApp Image 2026-02-11 at 9.26.21 PM (1).jpeg",
+    "WhatsApp Image 2026-02-11 at 9.26.21 PM - Copy.jpeg",
+    "WhatsApp Image 2026-02-11 at 9.26.21 PM.jpeg",
+    "WhatsApp Image 2026-02-11 at 9.49.35 PM.jpeg",
+  ];
 
   return (
     <section className="bg-[#05060b] py-16">
@@ -16,19 +35,26 @@ export default function LocalGallery() {
           <h2 className="text-2xl font-semibold text-white">
             Local Gallery Board
           </h2>
-          <p className="text-sm text-slate-300">
-            Drop new images into the grid below to build out the local archive.
-          </p>
         </div>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {placeholders.map((index) => (
-            <div
-              key={`local-placeholder-${index}`}
-              className="flex aspect-4/3 items-center justify-center rounded-2xl border border-dashed border-white/20 bg-white/5 text-xs uppercase tracking-[0.2em] text-slate-400"
-            >
-              Add Image
-            </div>
-          ))}
+          {localImages.map((name) => {
+            const src = `/assets/gallery/local/${encodeURIComponent(name)}`;
+            return (
+              <div
+                key={name}
+                className="hover-card reveal-soft relative overflow-hidden rounded-2xl border border-white/10 bg-white/5"
+              >
+                <div className="relative aspect-4/3 bg-black/20">
+                  <Image
+                    src={src}
+                    alt={name}
+                    fill
+                    className="object-contain"
+                  />
+                </div>
+              </div>
+            );
+          })}
         </div>
       </Container>
     </section>
