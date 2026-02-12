@@ -4,13 +4,13 @@ export default function Loading() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-[#05060b] text-white">
       <div className="flex flex-col items-center gap-6">
-        <div className="rounded-full border border-white/10 bg-white/5 p-6 shadow-2xl shadow-black/40">
+        <div className="border border-white/10 bg-white/5 p-7 shadow-2xl shadow-black/40">
           <Image
-            src="/matheesha_logo.png?v=2"
+            src="/matheesha_logo.png?v=4"
             alt="Matheesha Wijesekara"
-            width={160}
-            height={160}
-            className="animate-logo-pulse h-40 w-40 object-contain"
+            width={200}
+            height={200}
+            className="animate-logo-pulse h-48 w-48 object-contain"
             priority
           />
         </div>
@@ -22,6 +22,9 @@ export default function Loading() {
             <span className="animate-dot animate-dot-delay-2 h-2 w-2 rounded-full bg-yellow-400" />
           </span>
         </div>
+        <p className="text-center text-sm text-slate-300">
+          Proud alumnus of Royal College, Colombo 7
+        </p>
       </div>
     </div>
   );

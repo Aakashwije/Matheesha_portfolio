@@ -20,8 +20,8 @@ export const metadata: Metadata = {
   description:
     "Professional squash portfolio for Matheesha Wijesekara, Sri Lanka's top U19 athlete.",
   icons: {
-    icon: "/matheesha_logo.png",
-    apple: "/matheesha_logo.png",
+  icon: "/matheesha_logo.png?v=4",
+  apple: "/matheesha_logo.png?v=4",
   },
 };
 

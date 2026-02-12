@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
     localPatterns: [
       {
         pathname: "/matheesha_logo.png",
-        search: "?v=2",
+        search: "?v=4",
       },
       {
         pathname: "/matheesha_profile.png",

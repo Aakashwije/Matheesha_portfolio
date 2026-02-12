@@ -27,15 +27,15 @@ export default function SplashScreen() {
   }
 
   return (
-  <div className="fixed inset-0 z-100 flex items-center justify-center bg-[#05060b] text-white">
+    <div className="fixed inset-0 z-100 flex items-center justify-center bg-[#05060b] text-white">
       <div className="flex flex-col items-center gap-6">
-        <div className="rounded-full border border-white/10 bg-white/5 p-6 shadow-2xl shadow-black/40">
+        <div className="rounded-full border border-white/10 bg-white/5 p-8 shadow-2xl shadow-black/40">
           <Image
-            src="/matheesha_logo.png?v=2"
+            src="/matheesha_logo.png?v=4"
             alt="Matheesha Wijesekara"
-            width={200}
-            height={200}
-            className="animate-logo-pulse h-48 w-48 object-contain"
+            width={260}
+            height={260}
+            className="animate-logo-pulse h-60 w-60 object-contain"
             priority
           />
         </div>
@@ -47,6 +47,9 @@ export default function SplashScreen() {
             <span className="animate-dot animate-dot-delay-2 h-2 w-2 rounded-full bg-yellow-400" />
           </span>
         </div>
+        <p className="text-center text-sm text-slate-300">
+          Proud alumnus of Royal College, Colombo 7
+        </p>
       </div>
     </div>
   );
