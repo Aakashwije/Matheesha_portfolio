@@ -9,7 +9,7 @@ import { mediaArticles } from "@/lib/siteData";
 
 export default function Media() {
   const mediaImages = [
-    "03.02.2026 SL Junior Open.1.jpeg",
+    "Team Championship.1.jpg",
     "03.02.2026 SL Junior Open.jpeg",
     "04.02.2026 SL Junior Open.jpeg",
     "15.02.2026 SLJunior Open.jpeg",
@@ -33,7 +33,7 @@ export default function Media() {
     "Junior nationals 2024.jpg",
     "Squash Tourney.jpg",
     "TEam Championship.5.jpg",
-    "Team Championship.1.jpg",
+    "03.02.2026 SL Junior Open.1.jpeg",
     "Team Championship.2.jpg",
     "Team Championship.3.jpg",
     "Team Championship.4.jpg",
@@ -61,9 +61,7 @@ export default function Media() {
           <h2 className="text-2xl font-semibold text-white">
             Media Photo Tiles
           </h2>
-          <p className="text-sm text-slate-300">
-            Drop in press photos, magazine scans, and interview snapshots here.
-          </p>
+          
         </div>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {mediaImages.map((name) => {
