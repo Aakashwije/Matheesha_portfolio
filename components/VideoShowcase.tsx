@@ -34,6 +34,7 @@ export default function VideoShowcase() {
               onClick={() => setActiveVideo(file)}
             >
               <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-black/40 via-transparent to-black/60 opacity-0 transition group-hover:opacity-100" />
+              <div className="pointer-events-none absolute inset-0 bg-black/35 backdrop-blur-sm transition group-hover:opacity-0" />
               <video
                 className="h-full w-full scale-105 blur-sm transition duration-500 group-hover:blur-0 group-hover:scale-100"
                 src={`/assets/vedios/${encodeURIComponent(file)}`}

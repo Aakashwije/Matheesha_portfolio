@@ -3,8 +3,7 @@
 import Container from "@/components/Container";
 import PrimaryButton from "@/components/PrimaryButton";
 import SectionHeading from "@/components/SectionHeading";
-import SponsorPackageCard from "@/components/SponsorPackageCard";
-import { sponsorBenefits, sponsorPackages } from "@/lib/siteData";
+import { sponsorBenefits } from "@/lib/siteData";
 
 export default function Sponsors() {
   return (
@@ -17,33 +16,17 @@ export default function Sponsors() {
             subtitle="Support Matheesha’s international tour calendar and showcase your brand across the squash circuit."
             action={<PrimaryButton href="/contact">Get in touch</PrimaryButton>}
           />
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="grid gap-6 md:grid-cols-2">
             {sponsorBenefits.map((benefit) => (
               <div
                 key={benefit}
-                className="rounded-2xl border border-white/10 bg-white/5 p-5 text-sm text-slate-300"
+                className="hover-card hover-glow reveal-soft rounded-2xl border border-yellow-400/30 bg-white/5 p-6 text-sm text-slate-200 shadow-lg shadow-black/30"
               >
-                <span className="text-yellow-400">●</span> {benefit}
+                <div className="flex items-start gap-3">
+                  <span className="mt-1 h-2 w-2 rounded-full bg-yellow-400 shadow-[0_0_10px_rgba(250,204,21,0.7)]" />
+                  <span>{benefit}</span>
+                </div>
               </div>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      <section className="bg-[#0b0e17] py-16">
-        <Container className="space-y-10">
-          <SectionHeading
-            eyebrow="Packages"
-            title="Sponsorship Packages"
-            subtitle="Choose a partnership tier that aligns with your brand’s goals."
-          />
-          <div className="grid gap-6 md:grid-cols-3">
-            {sponsorPackages.map((pkg, index) => (
-              <SponsorPackageCard
-                key={pkg.name}
-                {...pkg}
-                highlighted={index === 0}
-              />
             ))}
           </div>
         </Container>

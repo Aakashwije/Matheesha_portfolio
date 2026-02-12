@@ -35,8 +35,12 @@ export default function Hero() {
             transition={{ delay: 0.2 }}
             className="max-w-2xl text-base text-slate-300 md:text-lg"
           >
-            National U19 No.1, Men’s Open Top 10, and a rising force on the Asian
-            junior circuit. Focused on speed, precision, and international podiums.
+            Matheesha Wijesekara is a dynamic Sri Lankan Junior National Squash
+            Champion who competes with passion, power, and purpose. A fearless
+            competitor on both national and international stages, he represents his
+            country with pride and relentless drive — inspiring others through his
+            dedication, resilience, and winning mindset. A true role model — on and
+            off the court.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -64,7 +68,7 @@ export default function Hero() {
             alt="Matheesha profile"
             width={440}
             height={440}
-            className="animate-float-soft h-80 w-80 rounded-full border border-white/20 bg-white/5 object-cover object-top shadow-2xl shadow-black/50 sm:h-96 sm:w-96"
+            className="animate-float-soft h-80 w-80 rounded-3xl border border-white/20 bg-black/20 object-contain p-2 shadow-2xl shadow-black/50 sm:h-96 sm:w-96"
             priority
           />
         </motion.div>

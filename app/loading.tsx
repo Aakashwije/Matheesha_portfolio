@@ -6,7 +6,7 @@ export default function Loading() {
       <div className="flex flex-col items-center gap-6">
         <div className="rounded-full border border-white/10 bg-white/5 p-6 shadow-2xl shadow-black/40">
           <Image
-            src="/matheesha_logo.png"
+            src="/matheesha_logo.png?v=2"
             alt="Matheesha Wijesekara"
             width={160}
             height={160}

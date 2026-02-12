@@ -2,6 +2,18 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
+    localPatterns: [
+      {
+        pathname: "/matheesha_logo.png",
+        search: "?v=2",
+      },
+      {
+        pathname: "/matheesha_profile.png",
+      },
+      {
+        pathname: "/assets/**",
+      },
+    ],
     remotePatterns: [
       {
         protocol: "https",
