@@ -7,9 +7,9 @@ import SectionHeading from "./SectionHeading";
 
 const videoFiles = [
   "WhatsApp Video 2026-02-11 at 10.52.27 PM.mp4",
-  "WhatsApp Video 2026-02-11 at 10.56.08 PM.mp4",
-  "WhatsApp Video 2026-02-11 at 10.57.01 PM.mp4",
-  "WhatsApp Video 2026-02-11 at 11.02.10 PM.mp4",
+  "new1.mp4",
+  "new2.mp4",
+  "new3.mp4",
 ];
 
 export default function VideoShowcase() {
