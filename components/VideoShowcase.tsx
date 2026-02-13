@@ -10,6 +10,7 @@ const videoFiles = [
   "new1.mp4",
   "new2.mp4",
   "new3.mp4",
+  "new4.mp4",
 ];
 
 export default function VideoShowcase() {
