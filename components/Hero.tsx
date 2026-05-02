@@ -33,7 +33,7 @@ export default function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="max-w-2xl text-base text-slate-300 md:text-lg"
+            className="max-w-2xl text-justify text-base text-slate-300 md:text-lg"
           >
             Matheesha Wijesekara is a dynamic Sri Lankan Junior National Squash
             Champion who competes with passion, power, and purpose. A fearless

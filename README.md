@@ -23,6 +23,7 @@ A high-performance, dark-themed sports portfolio for **Matheesha Wijesekara** �
 - [Available Scripts](#available-scripts)
 - [Content Management](#content-management)
 - [Animation System](#animation-system)
+- [System Architecture](#system-architecture)
 - [Deployment](#deployment)
 - [Contributing](#contributing)
 - [License](#license)
@@ -259,6 +260,187 @@ All animations are built on **Framer Motion** with no additional animation libra
 | Splash screen     | `SplashScreen.tsx`                      | CSS `animate-logo-pulse` + `animate-dot` bouncing dots     |
 
 > **Touch devices:** The custom cursor is automatically hidden on touch screens via `@media (pointer: coarse) { body { cursor: auto; } }`.
+
+---
+
+## System Architecture
+
+### 1. High-Level System Overview
+
+How the browser, CDN, and external services relate at runtime.
+
+```mermaid
+architecture-beta
+  group cdn(cloud)[Vercel Edge Network]
+  group origin(server)[Vercel Origin]
+  group external(internet)[External Services]
+
+  service browser(internet)[Browser]
+  service edge(server)[Edge CDN / Static Assets] in cdn
+  service ssr(server)[Next.js SSR / RSC] in origin
+  service images(server)[next/image Optimisation] in origin
+  service unsplash(internet)[Unsplash CDN] in external
+  service youtube(internet)[YouTube iFrame API] in external
+  service fonts(internet)[Google Fonts CDN] in external
+
+  browser:R --> L:edge
+  edge:R --> L:ssr
+  ssr:B --> T:images
+  images:R --> L:unsplash
+  browser:T --> B:youtube
+  browser:T --> B:fonts
+```
+
+---
+
+### 2. Next.js App Router — Page & Component Tree
+
+Every route and the major components it composes.
+
+```mermaid
+graph TD
+  Layout["layout.tsx\nNavbar · Footer · SplashScreen · CustomCursor"]
+  Template["template.tsx\nPage Transition Wrapper"]
+
+  Layout --> Template
+  Template --> Home
+  Template --> Achievements
+  Template --> Gallery
+  Template --> Podium
+  Template --> Media
+  Template --> Sponsors
+  Template --> Videos
+  Template --> Contact
+
+  Home["/ — page.tsx"] --> Hero
+  Home --> Stats
+  Home --> PodiumComp[Podium]
+  Home --> VideoShowcase
+  Home --> Newspaper
+
+  Stats --> StatCard
+  PodiumComp --> SectionHeading
+  Newspaper --> MediaCard
+
+  Achievements["/achievements"] --> Timeline
+  Achievements --> AchievementCards[Achievement Cards]
+  Achievements --> AchievementSections[Tournament Track Record]
+
+  Gallery["/gallery/:type"] --> GalleryGrid
+  GalleryGrid --> Lightbox[Lightbox Modal]
+
+  Podium["/podium/:type"] --> PodiumCards[Podium Cards]
+
+  Sponsors["/sponsors"] --> SponsorBenefits[Benefit Cards]
+  Sponsors --> SponsorPackageCard
+
+  Videos["/videos"] --> VideoCard
+  Media["/media"] --> MediaCard
+  Contact["/contact"] --> ContactCards[Contact Cards]
+
+  style Layout fill:#1a1a2e,color:#facc15
+  style Template fill:#16213e,color:#facc15
+  style Home fill:#0f3460,color:#fff
+```
+
+---
+
+### 3. Data Flow — Content to UI
+
+How `siteData.js` feeds into every page and component.
+
+```mermaid
+flowchart LR
+  SD[("lib/siteData.js\nSingle Source of Truth")]
+
+  SD -->|stats| StatsComp[Stats Section]
+  SD -->|podiumHighlights| PodiumComp[Podium Section]
+  SD -->|achievementsTimeline| TL[Timeline]
+  SD -->|achievementCards| AC[Achievement Cards]
+  SD -->|achievementSections| AS[Tournament Track Record]
+  SD -->|mediaHighlights| MH[Media Highlights]
+  SD -->|mediaArticles| MA[Media Articles]
+  SD -->|galleryImages| GG[GalleryGrid]
+  SD -->|sponsorBenefits| SB[Sponsor Benefits]
+  SD -->|sponsorPackages| SP[SponsorPackageCard]
+  SD -->|navLinks| Nav[Navbar]
+
+  StatsComp --> StatCard[StatCard\nAnimated Counter]
+  PodiumComp --> SH[SectionHeading\nScramble Text]
+  TL --> SH
+
+  style SD fill:#facc15,color:#000
+```
+
+---
+
+### 4. Animation Pipeline
+
+How a user scrolling triggers the full animation chain.
+
+```mermaid
+sequenceDiagram
+  actor User
+  participant Browser
+  participant FramerMotion as Framer Motion
+  participant Component
+  participant CSS
+
+  User->>Browser: lands on page
+  Browser->>CSS: SplashScreen mounts → logo-pulse + dot-bounce
+  Browser->>FramerMotion: template.tsx mounts
+  FramerMotion->>Component: initial {opacity:0, y:10} → animate {opacity:1, y:0}
+  Note over Component: Page fade-in transition
+
+  User->>Browser: scrolls down
+  Browser->>FramerMotion: IntersectionObserver fires (whileInView)
+  FramerMotion->>Component: SectionHeading reveals
+  Component->>Component: ScrambleText begins 700 ms decode
+  FramerMotion->>Component: StatCard enters viewport
+  Component->>Browser: requestAnimationFrame counter 0 → target
+  FramerMotion->>Component: Cards stagger in (index × 70-80 ms delay)
+
+  User->>Browser: hovers PrimaryButton
+  Browser->>FramerMotion: mousemove delta captured
+  FramerMotion->>Component: useSpring x/y — magnetic pull
+
+  User->>Browser: moves cursor
+  Browser->>FramerMotion: CustomCursor useMotionValue update
+  FramerMotion->>Component: dot (stiffness 500) + ring (stiffness 200) follow
+```
+
+---
+
+### 5. CI / CD Pipeline
+
+From a `git push` to a live production URL.
+
+```mermaid
+flowchart TD
+  Dev[Developer pushes to main] --> GHA
+
+  subgraph GHA [GitHub Actions]
+    A[actions/checkout@v4] --> B[actions/setup-node@v4\nNode 20.x]
+    B --> C[npm ci]
+    C --> D[npm run build\nnext build]
+    D -->|exit 0| Pass[✅ Build passed]
+    D -->|exit 1| Fail[❌ Build failed\nNotify via Actions UI]
+  end
+
+  Dev --> Vercel
+
+  subgraph Vercel [Vercel Platform]
+    V1[Detect push to main] --> V2[Install dependencies]
+    V2 --> V3[next build]
+    V3 --> V4[Deploy to Edge Network]
+    V4 --> V5[🌐 Live at production URL]
+    V4 --> V6[Preview URL generated\nfor PRs]
+  end
+
+  style Pass fill:#166534,color:#fff
+  style Fail fill:#991b1b,color:#fff
+  style V5 fill:#166534,color:#fff
+```
 
 ---
 
