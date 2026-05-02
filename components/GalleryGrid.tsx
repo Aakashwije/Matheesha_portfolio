@@ -1,15 +1,14 @@
 "use client";
 
-import { useState } from "react";
-import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
 import { galleryImages } from "@/lib/siteData";
+import { AnimatePresence, motion } from "framer-motion";
+import Image from "next/image";
+import { useState } from "react";
 
 export default function GalleryGrid() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
-  const activeImage =
-    activeIndex === null ? null : galleryImages[activeIndex];
+  const activeImage = activeIndex === null ? null : galleryImages[activeIndex];
 
   return (
     <div className="space-y-10">
@@ -18,6 +17,10 @@ export default function GalleryGrid() {
           <motion.button
             type="button"
             key={image.src}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: index * 0.08, duration: 0.4 }}
             whileHover={{ scale: 1.02 }}
             onClick={() => setActiveIndex(index)}
             className="hover-card reveal-soft group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5"

@@ -8,7 +8,7 @@ import PrimaryButton from "./PrimaryButton";
 export default function Hero() {
   return (
     <section className="relative overflow-hidden bg-[#05060b]">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(250,204,21,0.18),transparent_55%)]" />
+      <div className="aurora-bg absolute inset-0" />
       <Container className="relative flex min-h-[80vh] flex-col items-start justify-center gap-10 py-24 lg:flex-row lg:items-center lg:justify-between">
         <div className="space-y-8">
           <motion.p
@@ -37,10 +37,10 @@ export default function Hero() {
           >
             Matheesha Wijesekara is a dynamic Sri Lankan Junior National Squash
             Champion who competes with passion, power, and purpose. A fearless
-            competitor on both national and international stages, he represents his
-            country with pride and relentless drive — inspiring others through his
-            dedication, resilience, and winning mindset. A true role model — on and
-            off the court.
+            competitor on both national and international stages, he represents
+            his country with pride and relentless drive — inspiring others
+            through his dedication, resilience, and winning mindset. A true role
+            model — on and off the court.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
