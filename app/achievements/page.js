@@ -1,14 +1,16 @@
 "use client";
 
-import { motion } from "framer-motion";
 import Container from "@/components/Container";
 import SectionHeading from "@/components/SectionHeading";
 import Timeline from "@/components/Timeline";
 import {
+  academicProfile,
   achievementCards,
   achievementSections,
   achievementsTimeline,
+  olResults,
 } from "@/lib/siteData";
+import { motion } from "framer-motion";
 
 export default function Achievements() {
   return (
@@ -36,7 +38,8 @@ export default function Achievements() {
               Profile PDF
             </p>
             <p className="mt-2 text-base text-white">
-              Download Matheesha’s profile for a brief summary of key achievements.
+              Download Matheesha’s profile for a brief summary of key
+              achievements.
             </p>
             <a
               href="/assets/media/Profile%20of%20Matheesha%20Wijesekara%20(2).pdf"
@@ -55,7 +58,9 @@ export default function Achievements() {
                 transition={{ delay: index * 0.1 }}
                 className="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-lg shadow-black/30"
               >
-                <h3 className="text-xl font-semibold text-white">{card.title}</h3>
+                <h3 className="text-xl font-semibold text-white">
+                  {card.title}
+                </h3>
                 <p className="mt-2 text-sm text-slate-300">{card.detail}</p>
               </motion.div>
             ))}
@@ -99,6 +104,112 @@ export default function Achievements() {
               </motion.div>
             ))}
           </div>
+        </Container>
+      </section>
+
+      {/* ── Academics ── */}
+      <section className="bg-[#05060b] py-16">
+        <Container className="space-y-12">
+          <SectionHeading
+            eyebrow="Academics"
+            title="Balancing Court & Classroom"
+            subtitle="Elite performance on the squash court — and in the examination hall."
+          />
+
+          {/* O/L Results card */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-lg shadow-black/30 md:p-8"
+          >
+            <div className="mb-6 flex flex-col gap-1">
+              <p className="text-xs uppercase tracking-[0.3em] text-yellow-400">
+                {academicProfile.ol.exam}
+              </p>
+              <p className="text-sm text-slate-400">
+                {academicProfile.ol.school}
+              </p>
+              <p className="mt-1 text-base font-semibold text-white">
+                {academicProfile.ol.summary}
+              </p>
+            </div>
+
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {olResults.map((row, index) => (
+                <motion.div
+                  key={row.subject}
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.06 }}
+                  className={`flex items-center justify-between rounded-xl border px-4 py-3 ${
+                    row.grade === "A"
+                      ? "border-yellow-400/40 bg-yellow-400/5"
+                      : "border-white/10 bg-white/5"
+                  }`}
+                >
+                  <span className="text-sm text-slate-200">{row.subject}</span>
+                  <span
+                    className={`text-lg font-bold ${
+                      row.grade === "A" ? "text-yellow-400" : "text-slate-300"
+                    }`}
+                  >
+                    {row.grade}
+                  </span>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* A/L current status card */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.15 }}
+            className="rounded-2xl border border-yellow-400/30 bg-yellow-400/5 p-6 shadow-lg shadow-black/30 md:p-8"
+          >
+            <p className="text-xs uppercase tracking-[0.3em] text-yellow-400">
+              G.C.E. (A/L) — In Progress
+            </p>
+            <p className="mt-1 text-sm text-slate-400">
+              {academicProfile.al.school}
+            </p>
+            <h3 className="mt-3 text-xl font-semibold text-white">
+              {academicProfile.al.stream}
+            </h3>
+            <p className="mt-1 text-sm text-yellow-400/80">
+              {academicProfile.al.status}
+            </p>
+            <div className="mt-5 flex flex-wrap gap-3">
+              {academicProfile.al.subjects.map((subject) => (
+                <span
+                  key={subject}
+                  className="rounded-full border border-white/20 bg-white/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.15em] text-slate-200"
+                >
+                  {subject}
+                </span>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Balance quote */}
+          <motion.blockquote
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="border-l-2 border-yellow-400 pl-6 text-slate-300"
+          >
+            <p className="text-base italic leading-relaxed">
+              &ldquo;Competing internationally while maintaining strong academic
+              results at Royal College demonstrates the same discipline that
+              drives Matheesha on the squash court &mdash; focus, consistency,
+              and an unwillingness to settle for less.&rdquo;
+            </p>
+          </motion.blockquote>
         </Container>
       </section>
     </div>
