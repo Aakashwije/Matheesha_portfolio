@@ -270,25 +270,30 @@ All animations are built on **Framer Motion** with no additional animation libra
 How the browser, CDN, and external services relate at runtime.
 
 ```mermaid
-architecture-beta
-  group cdn(cloud)[Vercel Edge Network]
-  group origin(server)[Vercel Origin]
-  group external(internet)[External Services]
+flowchart LR
+  Browser([Browser])
 
-  service browser(internet)[Browser]
-  service edge(server)[Edge CDN / Static Assets] in cdn
-  service ssr(server)[Next.js SSR / RSC] in origin
-  service images(server)[next/image Optimisation] in origin
-  service unsplash(internet)[Unsplash CDN] in external
-  service youtube(internet)[YouTube iFrame API] in external
-  service fonts(internet)[Google Fonts CDN] in external
+  subgraph CDN [Vercel Edge Network]
+    Edge[Edge CDN / Static Assets]
+  end
 
-  browser:R --> L:edge
-  edge:R --> L:ssr
-  ssr:B --> T:images
-  images:R --> L:unsplash
-  browser:T --> B:youtube
-  browser:T --> B:fonts
+  subgraph Origin [Vercel Origin]
+    SSR[Next.js SSR / RSC]
+    ImgOpt[next/image Optimisation]
+  end
+
+  subgraph External [External Services]
+    Unsplash[Unsplash CDN]
+    YouTube[YouTube iFrame API]
+    Fonts[Google Fonts CDN]
+  end
+
+  Browser --> Edge
+  Edge --> SSR
+  SSR --> ImgOpt
+  ImgOpt --> Unsplash
+  Browser --> YouTube
+  Browser --> Fonts
 ```
 
 ---
@@ -420,11 +425,11 @@ flowchart TD
   Dev[Developer pushes to main] --> GHA
 
   subgraph GHA [GitHub Actions]
-    A[actions/checkout@v4] --> B[actions/setup-node@v4\nNode 20.x]
+    A[checkout v4] --> B[setup-node v4 - Node 20.x]
     B --> C[npm ci]
-    C --> D[npm run build\nnext build]
-    D -->|exit 0| Pass[✅ Build passed]
-    D -->|exit 1| Fail[❌ Build failed\nNotify via Actions UI]
+    C --> D[npm run build - next build]
+    D -->|exit 0| Pass[Build passed]
+    D -->|exit 1| Fail[Build failed - Notify via Actions UI]
   end
 
   Dev --> Vercel
@@ -433,8 +438,8 @@ flowchart TD
     V1[Detect push to main] --> V2[Install dependencies]
     V2 --> V3[next build]
     V3 --> V4[Deploy to Edge Network]
-    V4 --> V5[🌐 Live at production URL]
-    V4 --> V6[Preview URL generated\nfor PRs]
+    V4 --> V5[Live at production URL]
+    V4 --> V6[Preview URL generated for PRs]
   end
 
   style Pass fill:#166534,color:#fff
