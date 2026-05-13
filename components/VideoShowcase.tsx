@@ -15,32 +15,61 @@ const videoFiles = [
   "british2.mp4",
 ];
 
-export default function VideoShowcase() {
-  const [activeVideo, setActiveVideo] = useState<string | null>(null);
+type VideoItem = {
+  name: string;
+  src: string;
+};
+
+type SectionCopy = {
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+};
+
+const fallbackVideos = videoFiles.map((file) => ({
+  name: file,
+  src: `/assets/vedios/${encodeURIComponent(file)}`,
+}));
+
+const fallbackCopy = {
+  eyebrow: "Match Videos",
+  title: "Highlights & Training Sessions",
+  subtitle:
+    "Quick clips that capture match intensity, training rhythm, and tournament momentum.",
+};
+
+export default function VideoShowcase({
+  videos = fallbackVideos,
+  copy = fallbackCopy,
+}: {
+  videos?: VideoItem[];
+  copy?: SectionCopy;
+}) {
+  const [activeVideo, setActiveVideo] = useState<VideoItem | null>(null);
 
   return (
     <section className="bg-[#05060b] py-16">
       <Container className="space-y-10">
         <SectionHeading
-          eyebrow="Match Videos"
-          title="Highlights & Training Sessions"
-          subtitle="Quick clips that capture match intensity, training rhythm, and tournament momentum."
+          eyebrow={copy.eyebrow}
+          title={copy.title}
+          subtitle={copy.subtitle}
         />
         <div className="grid gap-6 md:grid-cols-2">
-          {videoFiles.map((file) => (
+          {videos.map((video) => (
             <motion.button
-              key={file}
+              key={video.src}
               type="button"
               whileHover={{ y: -6, scale: 1.01 }}
               whileTap={{ scale: 0.98 }}
               className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-lg shadow-black/30"
-              onClick={() => setActiveVideo(file)}
+              onClick={() => setActiveVideo(video)}
             >
               <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-black/40 via-transparent to-black/60 opacity-0 transition group-hover:opacity-100" />
               <div className="pointer-events-none absolute inset-0 bg-black/35 backdrop-blur-sm transition group-hover:opacity-0" />
               <video
                 className="h-full w-full scale-105 blur-sm transition duration-500 group-hover:blur-0 group-hover:scale-100"
-                src={`/assets/vedios/${encodeURIComponent(file)}`}
+                src={video.src}
                 preload="metadata"
               >
                 <track
@@ -82,7 +111,7 @@ export default function VideoShowcase() {
                   controls
                   autoPlay
                   className="h-full w-full"
-                  src={`/assets/vedios/${encodeURIComponent(activeVideo)}`}
+                  src={activeVideo.src}
                 >
                   <track
                     kind="captions"
@@ -95,7 +124,7 @@ export default function VideoShowcase() {
               </div>
               <div className="flex items-center justify-between px-6 py-4">
                 <p className="text-sm uppercase tracking-[0.3em] text-yellow-400">
-                  Video Highlight
+                  {activeVideo.name.replace(/\.[^.]+$/, "")}
                 </p>
                 <button
                   type="button"

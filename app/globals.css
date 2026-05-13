@@ -19,6 +19,11 @@ body {
   }
 }
 
+.admin-dashboard,
+.admin-dashboard * {
+  cursor: auto;
+}
+
 * {
   scroll-behavior: smooth;
 }

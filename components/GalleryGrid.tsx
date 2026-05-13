@@ -5,15 +5,24 @@ import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { useState } from "react";
 
-export default function GalleryGrid() {
+type GalleryImage = {
+  src: string;
+  alt: string;
+};
+
+export default function GalleryGrid({
+  images = galleryImages,
+}: {
+  images?: GalleryImage[];
+}) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
-  const activeImage = activeIndex === null ? null : galleryImages[activeIndex];
+  const activeImage = activeIndex === null ? null : images[activeIndex];
 
   return (
     <div className="space-y-10">
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {galleryImages.map((image, index) => (
+        {images.map((image, index) => (
           <motion.button
             type="button"
             key={image.src}

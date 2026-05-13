@@ -1,26 +1,51 @@
-"use client";
-
 import Container from "@/components/Container";
 import SectionHeading from "@/components/SectionHeading";
 import Timeline from "@/components/Timeline";
-import {
-  academicProfile,
-  achievementCards,
-  achievementSections,
-  achievementsTimeline,
-  olResults,
-} from "@/lib/siteData";
-import { motion } from "framer-motion";
+import { getEditableContent } from "@/lib/content";
+
+export const dynamic = "force-dynamic";
+
+function MotionDiv({ initial, whileInView, viewport, transition, ...props }) {
+  void initial;
+  void whileInView;
+  void viewport;
+  void transition;
+  return <div {...props} />;
+}
+
+function MotionBlockquote({
+  initial,
+  whileInView,
+  viewport,
+  transition,
+  ...props
+}) {
+  void initial;
+  void whileInView;
+  void viewport;
+  void transition;
+  return <blockquote {...props} />;
+}
 
 export default function Achievements() {
+  const {
+    academicProfile,
+    achievementCards,
+    achievementSections,
+    achievementsTimeline,
+    olResults,
+    sectionCopy,
+  } = getEditableContent();
+  const copy = sectionCopy.achievements;
+
   return (
     <div className="bg-[#05060b]">
       <section className="py-16">
         <Container className="space-y-12">
           <SectionHeading
-            eyebrow="Achievements"
-            title="A Timeline of Growth"
-            subtitle="Major milestones that reflect competitive excellence and leadership."
+            eyebrow={copy.eyebrow}
+            title={copy.title}
+            subtitle={copy.subtitle}
           />
           <Timeline items={achievementsTimeline} />
         </Container>
@@ -50,7 +75,7 @@ export default function Achievements() {
           </div>
           <div className="grid gap-6 md:grid-cols-2">
             {achievementCards.map((card, index) => (
-              <motion.div
+              <MotionDiv
                 key={card.title}
                 initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -62,7 +87,7 @@ export default function Achievements() {
                   {card.title}
                 </h3>
                 <p className="mt-2 text-sm text-slate-300">{card.detail}</p>
-              </motion.div>
+              </MotionDiv>
             ))}
           </div>
         </Container>
@@ -77,7 +102,7 @@ export default function Achievements() {
           />
           <div className="grid gap-6 lg:grid-cols-3">
             {achievementSections.map((section, index) => (
-              <motion.div
+              <MotionDiv
                 key={section.title}
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -101,7 +126,7 @@ export default function Achievements() {
                     </li>
                   ))}
                 </ul>
-              </motion.div>
+              </MotionDiv>
             ))}
           </div>
         </Container>
@@ -117,7 +142,7 @@ export default function Achievements() {
           />
 
           {/* O/L Results card */}
-          <motion.div
+          <MotionDiv
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -138,7 +163,7 @@ export default function Achievements() {
 
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {olResults.map((row, index) => (
-                <motion.div
+                <MotionDiv
                   key={row.subject}
                   initial={{ opacity: 0, y: 10 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -158,13 +183,13 @@ export default function Achievements() {
                   >
                     {row.grade}
                   </span>
-                </motion.div>
+                </MotionDiv>
               ))}
             </div>
-          </motion.div>
+          </MotionDiv>
 
           {/* A/L current status card */}
-          <motion.div
+          <MotionDiv
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -193,10 +218,10 @@ export default function Achievements() {
                 </span>
               ))}
             </div>
-          </motion.div>
+          </MotionDiv>
 
           {/* Balance quote */}
-          <motion.blockquote
+          <MotionBlockquote
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
@@ -209,7 +234,7 @@ export default function Achievements() {
               drives Matheesha on the squash court &mdash; focus, consistency,
               and an unwillingness to settle for less.&rdquo;
             </p>
-          </motion.blockquote>
+          </MotionBlockquote>
         </Container>
       </section>
     </div>

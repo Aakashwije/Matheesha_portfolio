@@ -5,17 +5,40 @@ import Container from "./Container";
 import SectionHeading from "./SectionHeading";
 import { podiumHighlights } from "@/lib/siteData";
 
-export default function Podium() {
+type PodiumHighlight = {
+  title: string;
+  detail: string;
+};
+
+type SectionCopy = {
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+};
+
+const fallbackCopy = {
+  eyebrow: "Podium",
+  title: "Signature Achievements",
+  subtitle: "Highlights that define Matheesha’s competitive edge.",
+};
+
+export default function Podium({
+  items = podiumHighlights,
+  copy = fallbackCopy,
+}: {
+  items?: PodiumHighlight[];
+  copy?: SectionCopy;
+}) {
   return (
     <section className="bg-[#05060b] py-16">
       <Container className="space-y-10">
         <SectionHeading
-          eyebrow="Podium"
-          title="Signature Achievements"
-          subtitle="Highlights that define Matheesha’s competitive edge."
+          eyebrow={copy.eyebrow}
+          title={copy.title}
+          subtitle={copy.subtitle}
         />
         <div className="grid gap-6 md:grid-cols-3">
-          {podiumHighlights.map((item, index) => (
+          {items.map((item, index) => (
             <motion.div
               key={item.title}
               whileHover={{ y: -6 }}

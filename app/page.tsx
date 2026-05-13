@@ -3,15 +3,25 @@ import Stats from "@/components/Stats";
 import Podium from "@/components/Podium";
 import VideoShowcase from "@/components/VideoShowcase";
 import Newspaper from "@/components/Newspaper";
+import { getEditableContent, getPublicAssets } from "@/lib/content";
 
 export default function Home() {
+  const content = getEditableContent();
+  const videos = getPublicAssets("videos");
+
   return (
     <div className="bg-[#05060b] text-white">
-      <Hero />
-      <Stats />
-      <Podium />
-      <VideoShowcase />
-      <Newspaper />
+      <Hero content={content.hero} />
+      <Stats items={content.stats} copy={content.sectionCopy.homeStats} />
+      <Podium
+        items={content.podiumHighlights}
+        copy={content.sectionCopy.homePodium}
+      />
+      <VideoShowcase videos={videos} copy={content.sectionCopy.homeVideos} />
+      <Newspaper
+        items={content.mediaHighlights}
+        copy={content.sectionCopy.homeMedia}
+      />
     </div>
   );
 }

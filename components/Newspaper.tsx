@@ -6,17 +6,42 @@ import SectionHeading from "./SectionHeading";
 import MediaCard from "./MediaCard";
 import { mediaHighlights } from "@/lib/siteData";
 
-export default function Newspaper() {
+type MediaHighlight = {
+  title: string;
+  outlet: string;
+  date: string;
+  summary: string;
+};
+
+type SectionCopy = {
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+};
+
+const fallbackCopy = {
+  eyebrow: "Media",
+  title: "In the Headlines",
+  subtitle: "Coverage from Sri Lankan and regional press outlets.",
+};
+
+export default function Newspaper({
+  items = mediaHighlights,
+  copy = fallbackCopy,
+}: {
+  items?: MediaHighlight[];
+  copy?: SectionCopy;
+}) {
   return (
     <section className="bg-[#0b0e17] py-16">
       <Container className="space-y-10">
         <SectionHeading
-          eyebrow="Media"
-          title="In the Headlines"
-          subtitle="Coverage from Sri Lankan and regional press outlets."
+          eyebrow={copy.eyebrow}
+          title={copy.title}
+          subtitle={copy.subtitle}
         />
         <div className="grid gap-6 md:grid-cols-3">
-          {mediaHighlights.map((item, index) => (
+          {items.map((item, index) => (
             <motion.div
               key={item.title}
               initial={{ opacity: 0, y: 12 }}

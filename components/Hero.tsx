@@ -5,7 +5,22 @@ import Image from "next/image";
 import Container from "./Container";
 import PrimaryButton from "./PrimaryButton";
 
-export default function Hero() {
+const fallbackHero = {
+  eyebrow: "Sri Lanka • Squash • Elite Performance",
+  title: "Matheesha Wijesekara",
+  highlight: "High-Performance Squash Athlete",
+  description:
+    "Matheesha Wijesekara is a dynamic Sri Lankan Junior National Squash Champion who competes with passion, power, and purpose. A fearless competitor on both national and international stages, he represents his country with pride and relentless drive — inspiring others through his dedication, resilience, and winning mindset. A true role model — on and off the court.",
+  primaryCtaLabel: "Become a Sponsor",
+  primaryCtaHref: "/sponsors",
+  secondaryCtaLabel: "View Gallery",
+  secondaryCtaHref: "/gallery/local",
+  image: "/matheesha_profile.png",
+};
+
+type HeroContent = typeof fallbackHero;
+
+export default function Hero({ content = fallbackHero }: { content?: HeroContent }) {
   return (
     <section className="relative overflow-hidden bg-[#05060b]">
       <div className="aurora-bg absolute inset-0" />
@@ -16,7 +31,7 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             className="text-sm uppercase tracking-[0.4em] text-yellow-400"
           >
-            Sri Lanka • Squash • Elite Performance
+            {content.eyebrow}
           </motion.p>
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
@@ -24,10 +39,8 @@ export default function Hero() {
             transition={{ delay: 0.1 }}
             className="max-w-3xl text-4xl font-semibold leading-tight text-white md:text-6xl"
           >
-            Matheesha Wijesekara{" "}
-            <span className="block text-yellow-400">
-              High-Performance Squash Athlete
-            </span>
+            {content.title}{" "}
+            <span className="block text-yellow-400">{content.highlight}</span>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0 }}
@@ -35,12 +48,7 @@ export default function Hero() {
             transition={{ delay: 0.2 }}
             className="max-w-2xl text-justify text-base text-slate-300 md:text-lg"
           >
-            Matheesha Wijesekara is a dynamic Sri Lankan Junior National Squash
-            Champion who competes with passion, power, and purpose. A fearless
-            competitor on both national and international stages, he represents
-            his country with pride and relentless drive — inspiring others
-            through his dedication, resilience, and winning mindset. A true role
-            model — on and off the court.
+            {content.description}
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -48,12 +56,14 @@ export default function Hero() {
             transition={{ delay: 0.3 }}
             className="flex flex-wrap gap-4"
           >
-            <PrimaryButton href="/sponsors">Become a Sponsor</PrimaryButton>
+            <PrimaryButton href={content.primaryCtaHref}>
+              {content.primaryCtaLabel}
+            </PrimaryButton>
             <a
-              href="/gallery/local"
+              href={content.secondaryCtaHref}
               className="inline-flex items-center justify-center rounded-full border border-white/20 px-6 py-3 text-sm font-semibold uppercase tracking-wide text-white transition hover:border-yellow-400 hover:text-yellow-400"
             >
-              View Gallery
+              {content.secondaryCtaLabel}
             </a>
           </motion.div>
         </div>
@@ -64,7 +74,7 @@ export default function Hero() {
           className="flex w-full max-w-md justify-center lg:max-w-lg lg:justify-end lg:pl-10"
         >
           <Image
-            src="/matheesha_profile.png"
+            src={content.image}
             alt="Matheesha profile"
             width={440}
             height={440}
