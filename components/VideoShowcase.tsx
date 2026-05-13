@@ -1,7 +1,7 @@
 "use client";
 
+import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import Container from "./Container";
 import SectionHeading from "./SectionHeading";
 
@@ -11,6 +11,8 @@ const videoFiles = [
   "new2.mp4",
   "new3.mp4",
   "new4.mp4",
+  "british1.mp4",
+  "british2.mp4",
 ];
 
 export default function VideoShowcase() {
