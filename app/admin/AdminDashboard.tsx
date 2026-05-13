@@ -87,6 +87,13 @@ const collectionFields: Record<string, FieldConfig[]> = {
     { key: "src", label: "Image URL" },
     { key: "alt", label: "Alt Text" },
   ],
+  latestUpdateCards: [
+    { key: "image", label: "Image file name" },
+    { key: "title", label: "Title" },
+    { key: "badge", label: "Badge" },
+    { key: "icon", label: "Icon: trophy or dumbbell" },
+    { key: "description", label: "Description", multiline: true },
+  ],
   contactCards: [
     { key: "label", label: "Label" },
     { key: "name", label: "Name" },
@@ -104,6 +111,7 @@ const collectionLabels: Record<string, string> = {
   achievementCards: "Award Cards",
   olResults: "O/L Results",
   galleryImages: "Home Gallery Cards",
+  latestUpdateCards: "Latest Update Cards",
   contactCards: "Contact Cards",
 };
 
@@ -124,6 +132,7 @@ const uploadsBySection: Record<string, string[]> = {
 
 const advancedSections = [
   "hero",
+  "latestUpdate",
   "sectionCopy",
   "stats",
   "podiumHighlights",
@@ -207,6 +216,13 @@ export default function AdminDashboard() {
     }));
   }
 
+  function updateLatestUpdate(key: string, value: string) {
+    setContent((current: any) => ({
+      ...current,
+      latestUpdate: { ...current.latestUpdate, [key]: value },
+    }));
+  }
+
   function updateSectionCopy(section: string, key: string, value: string) {
     setContent((current: any) => ({
       ...current,
@@ -224,6 +240,15 @@ export default function AdminDashboard() {
     value: string,
   ) {
     setContent((current: any) => {
+      if (collection === "latestUpdateCards") {
+        const items = [...current.latestUpdate.cards];
+        items[index] = { ...items[index], [key]: value };
+        return {
+          ...current,
+          latestUpdate: { ...current.latestUpdate, cards: items },
+        };
+      }
+
       const items = [...current[collection]];
       items[index] = { ...items[index], [key]: value };
       return { ...current, [collection]: items };
@@ -231,6 +256,20 @@ export default function AdminDashboard() {
   }
 
   function addCollectionItem(collection: string) {
+    if (collection === "latestUpdateCards") {
+      setContent((current: any) => ({
+        ...current,
+        latestUpdate: {
+          ...current.latestUpdate,
+          cards: [
+            ...current.latestUpdate.cards,
+            emptyByCollection.latestUpdateCards,
+          ],
+        },
+      }));
+      return;
+    }
+
     setContent((current: any) => ({
       ...current,
       [collection]: [...current[collection], emptyByCollection[collection]],
@@ -238,6 +277,19 @@ export default function AdminDashboard() {
   }
 
   function removeCollectionItem(collection: string, index: number) {
+    if (collection === "latestUpdateCards") {
+      setContent((current: any) => ({
+        ...current,
+        latestUpdate: {
+          ...current.latestUpdate,
+          cards: current.latestUpdate.cards.filter(
+            (_item: any, itemIndex: number) => itemIndex !== index,
+          ),
+        },
+      }));
+      return;
+    }
+
     setContent((current: any) => ({
       ...current,
       [collection]: current[collection].filter(
@@ -571,6 +623,13 @@ export default function AdminDashboard() {
                   content={content}
                   onChange={updateSectionCopy}
                 />
+                <LatestUpdateEditor
+                  content={content}
+                  onChange={updateLatestUpdate}
+                  onAdd={addCollectionItem}
+                  onRemove={removeCollectionItem}
+                  onCardChange={updateCollectionItem}
+                />
                 <CollectionEditor collection="stats" content={content} onAdd={addCollectionItem} onRemove={removeCollectionItem} onChange={updateCollectionItem} />
                 <CollectionEditor collection="podiumHighlights" content={content} onAdd={addCollectionItem} onRemove={removeCollectionItem} onChange={updateCollectionItem} />
                 <CollectionEditor collection="mediaHighlights" content={content} onAdd={addCollectionItem} onRemove={removeCollectionItem} onChange={updateCollectionItem} />
@@ -608,7 +667,16 @@ export default function AdminDashboard() {
             ) : null}
 
             {activeSection === "podium" ? (
-              <CollectionEditor collection="podiumHighlights" content={content} onAdd={addCollectionItem} onRemove={removeCollectionItem} onChange={updateCollectionItem} />
+              <>
+                <LatestUpdateEditor
+                  content={content}
+                  onChange={updateLatestUpdate}
+                  onAdd={addCollectionItem}
+                  onRemove={removeCollectionItem}
+                  onCardChange={updateCollectionItem}
+                />
+                <CollectionEditor collection="podiumHighlights" content={content} onAdd={addCollectionItem} onRemove={removeCollectionItem} onChange={updateCollectionItem} />
+              </>
             ) : null}
 
             {activeSection === "media" ? (
@@ -781,6 +849,10 @@ function CollectionEditor({
   onChange: (collection: string, index: number, key: string, value: string) => void;
 }) {
   const fields = collectionFields[collection];
+  const items =
+    collection === "latestUpdateCards"
+      ? content.latestUpdate.cards
+      : content[collection];
 
   return (
     <Card
@@ -797,7 +869,7 @@ function CollectionEditor({
       }
     >
       <div className="space-y-4">
-        {content[collection].map((item: any, index: number) => (
+        {items.map((item: any, index: number) => (
           <div
             key={`${collection}-${index}`}
             className="grid gap-4 rounded-lg border border-white/10 bg-black/20 p-4 md:grid-cols-2"
@@ -824,6 +896,49 @@ function CollectionEditor({
         ))}
       </div>
     </Card>
+  );
+}
+
+function LatestUpdateEditor({
+  content,
+  onChange,
+  onAdd,
+  onRemove,
+  onCardChange,
+}: {
+  content: any;
+  onChange: (key: string, value: string) => void;
+  onAdd: (collection: string) => void;
+  onRemove: (collection: string, index: number) => void;
+  onCardChange: (
+    collection: string,
+    index: number,
+    key: string,
+    value: string,
+  ) => void;
+}) {
+  return (
+    <>
+      <Card title="Latest Update Event">
+        <div className="grid gap-4 md:grid-cols-2">
+          {["label", "event", "date", "venue"].map((field) => (
+            <TextField
+              key={field}
+              label={humanize(field)}
+              value={content.latestUpdate[field] ?? ""}
+              onChange={(value) => onChange(field, value)}
+            />
+          ))}
+        </div>
+      </Card>
+      <CollectionEditor
+        collection="latestUpdateCards"
+        content={content}
+        onAdd={onAdd}
+        onRemove={onRemove}
+        onChange={onCardChange}
+      />
+    </>
   );
 }
 
