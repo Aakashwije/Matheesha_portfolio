@@ -5,8 +5,8 @@ import { getEditableContent } from "@/lib/content";
 
 export const dynamic = "force-dynamic";
 
-export default function Gallery() {
-  const { galleryImages, sectionCopy } = getEditableContent();
+export default async function Gallery() {
+  const { galleryImages, sectionCopy } = await getEditableContent();
   const copy = sectionCopy.gallery;
 
   return (

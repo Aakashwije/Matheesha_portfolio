@@ -27,7 +27,7 @@ function MotionBlockquote({
   return <blockquote {...props} />;
 }
 
-export default function Achievements() {
+export default async function Achievements() {
   const {
     academicProfile,
     achievementCards,
@@ -35,7 +35,7 @@ export default function Achievements() {
     achievementsTimeline,
     olResults,
     sectionCopy,
-  } = getEditableContent();
+  } = await getEditableContent();
   const copy = sectionCopy.achievements;
 
   return (

@@ -5,9 +5,9 @@ import { getEditableContent, getPublicAssets } from "@/lib/content";
 
 export const dynamic = "force-dynamic";
 
-export default function InternationalGallery() {
-  const foreignImages = getPublicAssets("internationalGallery");
-  const { sectionCopy } = getEditableContent();
+export default async function InternationalGallery() {
+  const foreignImages = await getPublicAssets("internationalGallery");
+  const { sectionCopy } = await getEditableContent();
   const copy = sectionCopy.internationalGallery;
 
   return (

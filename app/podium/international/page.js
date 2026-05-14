@@ -5,8 +5,8 @@ import { getPublicAssets } from "@/lib/content";
 
 export const dynamic = "force-dynamic";
 
-export default function InternationalPodium() {
-  const foreignImages = getPublicAssets("internationalPodium");
+export default async function InternationalPodium() {
+  const foreignImages = await getPublicAssets("internationalPodium");
 
   return (
     <section className="bg-[#05060b] py-16">

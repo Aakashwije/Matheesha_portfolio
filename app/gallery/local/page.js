@@ -5,9 +5,9 @@ import { getEditableContent, getPublicAssets } from "@/lib/content";
 
 export const dynamic = "force-dynamic";
 
-export default function LocalGallery() {
-  const localImages = getPublicAssets("localGallery");
-  const { sectionCopy } = getEditableContent();
+export default async function LocalGallery() {
+  const localImages = await getPublicAssets("localGallery");
+  const { sectionCopy } = await getEditableContent();
   const copy = sectionCopy.localGallery;
 
   return (

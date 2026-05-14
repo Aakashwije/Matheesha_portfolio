@@ -6,10 +6,10 @@ import { getEditableContent, getPublicAssets } from "@/lib/content";
 
 export const dynamic = "force-dynamic";
 
-export default function Media() {
-  const content = getEditableContent();
+export default async function Media() {
+  const content = await getEditableContent();
   const copy = content.sectionCopy.homeMedia;
-  const mediaAssets = getPublicAssets("media");
+  const mediaAssets = await getPublicAssets("media");
   const mediaImages = mediaAssets.filter(
     (asset) => !asset.name.toLowerCase().endsWith(".pdf"),
   );

@@ -4,8 +4,8 @@ import { getEditableContent } from "@/lib/content";
 
 export const dynamic = "force-dynamic";
 
-export default function Contact() {
-  const { contactCards, sectionCopy } = getEditableContent();
+export default async function Contact() {
+  const { contactCards, sectionCopy } = await getEditableContent();
   const copy = sectionCopy.contact;
 
   return (

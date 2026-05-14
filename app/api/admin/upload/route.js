@@ -1,6 +1,16 @@
 import fs from "node:fs/promises";
 import path from "node:path";
-import { deletePublicAsset, getAssetDirectory } from "@/lib/content";
+import {
+  assetGroups,
+  deletePublicAsset,
+  ensureStorageBucket,
+  getAssetDirectory,
+} from "@/lib/content";
+import {
+  createSupabaseAdmin,
+  hasSupabaseConfig,
+  SUPABASE_BUCKET,
+} from "@/lib/supabaseAdmin";
 
 export const dynamic = "force-dynamic";
 
@@ -28,12 +38,50 @@ export async function POST(request) {
     return Response.json({ error: "File is required." }, { status: 400 });
   }
 
+  const fileName = cleanFileName(file.name);
+  const bytes = Buffer.from(await file.arrayBuffer());
+
+  if (hasSupabaseConfig()) {
+    const config = assetGroups[group];
+    if (!config) {
+      return Response.json({ error: "Unknown upload group." }, { status: 400 });
+    }
+
+    await ensureStorageBucket();
+
+    const objectPath = `${config.storagePath}/${fileName}`;
+    const supabase = createSupabaseAdmin();
+    const { error } = await supabase.storage
+      .from(SUPABASE_BUCKET)
+      .upload(objectPath, bytes, {
+        contentType: file.type || "application/octet-stream",
+        upsert: false,
+      });
+
+    if (error) {
+      return Response.json({ error: error.message }, { status: 500 });
+    }
+
+    const { data } = supabase.storage
+      .from(SUPABASE_BUCKET)
+      .getPublicUrl(objectPath);
+
+    return Response.json({
+      ok: true,
+      file: {
+        name: fileName,
+        path: objectPath,
+        src: data.publicUrl,
+        size: file.size,
+        type: file.type,
+      },
+    });
+  }
+
   const { absolute, publicPath } = getAssetDirectory(group);
   await fs.mkdir(absolute, { recursive: true });
 
-  const fileName = cleanFileName(file.name);
   const destination = path.join(absolute, fileName);
-  const bytes = Buffer.from(await file.arrayBuffer());
   await fs.writeFile(destination, bytes);
 
   return Response.json({
@@ -57,6 +105,6 @@ export async function DELETE(request) {
     );
   }
 
-  deletePublicAsset(group, name);
+  await deletePublicAsset(group, name);
   return Response.json({ ok: true });
 }

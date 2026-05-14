@@ -6,9 +6,9 @@ import VideoShowcase from "@/components/VideoShowcase";
 import Newspaper from "@/components/Newspaper";
 import { getEditableContent, getPublicAssets } from "@/lib/content";
 
-export default function Home() {
-  const content = getEditableContent();
-  const videos = getPublicAssets("videos");
+export default async function Home() {
+  const content = await getEditableContent();
+  const videos = await getPublicAssets("videos");
 
   return (
     <div className="bg-[#05060b] text-white">

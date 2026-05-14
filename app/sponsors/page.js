@@ -13,8 +13,8 @@ function MotionDiv({ initial, whileInView, viewport, transition, ...props }) {
   return <div {...props} />;
 }
 
-export default function Sponsors() {
-  const { sectionCopy, sponsorBenefits } = getEditableContent();
+export default async function Sponsors() {
+  const { sectionCopy, sponsorBenefits } = await getEditableContent();
   const copy = sectionCopy.sponsors;
 
   return (

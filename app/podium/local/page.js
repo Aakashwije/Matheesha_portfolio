@@ -6,9 +6,9 @@ import Image from "next/image";
 
 export const dynamic = "force-dynamic";
 
-export default function LocalPodium() {
-  const localImages = getPublicAssets("localPodium");
-  const { latestUpdate } = getEditableContent();
+export default async function LocalPodium() {
+  const localImages = await getPublicAssets("localPodium");
+  const { latestUpdate } = await getEditableContent();
 
   return (
     <section className="bg-[#05060b] py-16">

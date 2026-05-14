@@ -9,15 +9,15 @@ export const dynamic = "force-dynamic";
 
 export async function GET() {
   return Response.json({
-    content: getEditableContent(),
+    content: await getEditableContent(),
     assetGroups: getAssetGroupMeta(),
-    assets: getAllPublicAssets(),
+    assets: await getAllPublicAssets(),
   });
 }
 
 export async function PUT(request) {
   const content = await request.json();
-  saveEditableContent(content);
+  await saveEditableContent(content);
 
   return Response.json({ ok: true, content });
 }
