@@ -6,6 +6,8 @@ import VideoShowcase from "@/components/VideoShowcase";
 import Newspaper from "@/components/Newspaper";
 import { getEditableContent, getPublicAssets } from "@/lib/content";
 
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   const content = await getEditableContent();
   const videos = await getPublicAssets("videos");

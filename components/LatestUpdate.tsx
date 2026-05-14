@@ -23,6 +23,14 @@ const icons = {
   trophy: Trophy,
 };
 
+function resolveImageSrc(image: string) {
+  if (image.startsWith("http") || image.startsWith("/")) {
+    return image;
+  }
+
+  return `/assets/podium/Local/${encodeURIComponent(image)}`;
+}
+
 export default function LatestUpdate({
   content,
   contained = true,
@@ -64,7 +72,7 @@ export default function LatestUpdate({
             >
               <div className="relative aspect-4/3 w-full overflow-hidden">
                 <Image
-                  src={`/assets/podium/Local/${encodeURIComponent(card.image)}`}
+                  src={resolveImageSrc(card.image)}
                   alt={card.title}
                   fill
                   className="object-cover transition duration-500 group-hover:scale-105"

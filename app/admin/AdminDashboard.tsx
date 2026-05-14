@@ -31,6 +31,8 @@ type Asset = {
   name: string;
   src: string;
   alt: string;
+  source?: "local" | "supabase";
+  path?: string;
 };
 
 type AssetGroup = {
@@ -444,6 +446,8 @@ export default function AdminDashboard() {
           ...(current[group] ?? []),
           {
             name: data.file.name,
+            source: "supabase",
+            path: data.file.path,
             src: data.file.src,
             alt: data.file.name.replace(/\.[^.]+$/, ""),
           },
@@ -485,7 +489,11 @@ export default function AdminDashboard() {
     const response = await fetch("/api/admin/upload", {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ group, name: asset.name }),
+      body: JSON.stringify({
+        group,
+        name: asset.name,
+        source: asset.source,
+      }),
     });
 
     if (!response.ok) {
@@ -1181,7 +1189,7 @@ function UploadsPanel({
                     </p>
                     <p className="mt-1 flex items-center gap-1 text-xs uppercase tracking-wide text-white/45">
                       {fileKind(asset) === "document" ? <FileText size={12} /> : null}
-                      {fileKind(asset)}
+                      {fileKind(asset)} · {asset.source ?? "local"}
                     </p>
                   </div>
                   <button

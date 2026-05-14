@@ -96,7 +96,7 @@ export async function POST(request) {
 }
 
 export async function DELETE(request) {
-  const { group, name } = await request.json();
+  const { group, name, source } = await request.json();
 
   if (!group || !name) {
     return Response.json(
@@ -105,6 +105,6 @@ export async function DELETE(request) {
     );
   }
 
-  await deletePublicAsset(group, name);
+  await deletePublicAsset(group, name, source);
   return Response.json({ ok: true });
 }
