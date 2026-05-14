@@ -8,6 +8,7 @@ import {
   Home,
   ImageUp,
   Loader2,
+  LogOut,
   Mail,
   Medal,
   Newspaper,
@@ -19,7 +20,8 @@ import {
   Upload,
   Video,
 } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 type FieldConfig = {
   key: string;
@@ -175,6 +177,7 @@ function fileKind(asset: Asset) {
 }
 
 export default function AdminDashboard() {
+  const router = useRouter();
   const [content, setContent] = useState<any>(null);
   const [assetGroups, setAssetGroups] = useState<Record<string, AssetGroup>>({});
   const [assets, setAssets] = useState<Record<string, Asset[]>>({});
@@ -185,12 +188,14 @@ export default function AdminDashboard() {
   const [uploading, setUploading] = useState<Record<string, boolean>>({});
   const [message, setMessage] = useState("");
 
-  useEffect(() => {
-    loadContent();
-  }, []);
-
-  async function loadContent() {
+  const loadContent = useCallback(async () => {
     const response = await fetch("/api/admin/content", { cache: "no-store" });
+    if (!response.ok) {
+      await fetch("/api/admin/logout", { method: "POST" });
+      router.refresh();
+      return;
+    }
+
     const data = await response.json();
     setContent(data.content);
     setAssetGroups(data.assetGroups);
@@ -204,6 +209,15 @@ export default function AdminDashboard() {
       ),
     );
     setLoading(false);
+  }, [router]);
+
+  useEffect(() => {
+    loadContent();
+  }, [loadContent]);
+
+  async function logout() {
+    await fetch("/api/admin/logout", { method: "POST" });
+    router.refresh();
   }
 
   const activeUploadGroups = useMemo(
@@ -566,6 +580,14 @@ export default function AdminDashboard() {
               </button>
             ))}
           </nav>
+          <button
+            type="button"
+            onClick={logout}
+            className="mt-6 flex w-full items-center gap-3 rounded-lg border border-white/10 px-3 py-3 text-left text-sm font-semibold text-white/75 transition hover:border-red-300/50 hover:bg-red-400/10 hover:text-red-100"
+          >
+            <LogOut size={18} />
+            Log out
+          </button>
         </aside>
 
         <section className="px-5 py-6 md:px-8">

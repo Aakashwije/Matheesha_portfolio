@@ -4,10 +4,19 @@ import {
   getEditableContent,
   saveEditableContent,
 } from "@/lib/content";
+import { getAdminEmailFromRequest } from "@/lib/adminAuth";
 
 export const dynamic = "force-dynamic";
 
-export async function GET() {
+function unauthorized() {
+  return Response.json({ error: "Unauthorized." }, { status: 401 });
+}
+
+export async function GET(request) {
+  if (!getAdminEmailFromRequest(request)) {
+    return unauthorized();
+  }
+
   return Response.json({
     content: await getEditableContent(),
     assetGroups: getAssetGroupMeta(),
@@ -16,6 +25,10 @@ export async function GET() {
 }
 
 export async function PUT(request) {
+  if (!getAdminEmailFromRequest(request)) {
+    return unauthorized();
+  }
+
   const content = await request.json();
   await saveEditableContent(content);
 

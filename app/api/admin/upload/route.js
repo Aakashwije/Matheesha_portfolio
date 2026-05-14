@@ -11,8 +11,13 @@ import {
   hasSupabaseConfig,
   SUPABASE_BUCKET,
 } from "@/lib/supabaseAdmin";
+import { getAdminEmailFromRequest } from "@/lib/adminAuth";
 
 export const dynamic = "force-dynamic";
+
+function unauthorized() {
+  return Response.json({ error: "Unauthorized." }, { status: 401 });
+}
 
 function cleanFileName(fileName) {
   const extension = path.extname(fileName);
@@ -26,6 +31,10 @@ function cleanFileName(fileName) {
 }
 
 export async function POST(request) {
+  if (!getAdminEmailFromRequest(request)) {
+    return unauthorized();
+  }
+
   const formData = await request.formData();
   const group = formData.get("group");
   const file = formData.get("file");
@@ -96,6 +105,10 @@ export async function POST(request) {
 }
 
 export async function DELETE(request) {
+  if (!getAdminEmailFromRequest(request)) {
+    return unauthorized();
+  }
+
   const { group, name, source } = await request.json();
 
   if (!group || !name) {
