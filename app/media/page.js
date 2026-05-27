@@ -18,7 +18,7 @@ export default async function Media() {
   );
 
   return (
-    <section data-tour="media" className="bg-[#05060b] py-16">
+    <section className="bg-[#05060b] py-16">
       <Container className="space-y-10">
         <SectionHeading
           eyebrow={copy.eyebrow}

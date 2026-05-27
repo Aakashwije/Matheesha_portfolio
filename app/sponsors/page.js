@@ -19,7 +19,7 @@ export default async function Sponsors() {
 
   return (
     <div className="bg-[#05060b]">
-      <section data-tour="sponsors" className="py-16">
+      <section className="py-16">
         <Container className="space-y-10">
           <SectionHeading
             eyebrow={copy.eyebrow}

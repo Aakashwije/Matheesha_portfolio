@@ -31,7 +31,7 @@ export default function Stats({
   copy?: SectionCopy;
 }) {
   return (
-    <section data-tour="stats" className="bg-[#0b0e17] py-16">
+    <section className="bg-[#0b0e17] py-16">
       <Container className="space-y-10">
         <SectionHeading
           eyebrow={copy.eyebrow}

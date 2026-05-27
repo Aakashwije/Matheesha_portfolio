@@ -10,7 +10,7 @@ export default async function Gallery() {
   const copy = sectionCopy.gallery;
 
   return (
-    <section data-tour="gallery" className="bg-[#05060b] py-16">
+    <section className="bg-[#05060b] py-16">
       <Container className="space-y-10">
         <SectionHeading
           eyebrow={copy.eyebrow}
