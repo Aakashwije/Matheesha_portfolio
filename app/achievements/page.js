@@ -40,7 +40,7 @@ export default async function Achievements() {
 
   return (
     <div className="bg-[#05060b]">
-      <section className="py-16">
+      <section data-tour="achievements" className="py-16">
         <Container className="space-y-12">
           <SectionHeading
             eyebrow={copy.eyebrow}

@@ -22,7 +22,7 @@ type HeroContent = typeof fallbackHero;
 
 export default function Hero({ content = fallbackHero }: { content?: HeroContent }) {
   return (
-    <section className="relative overflow-hidden bg-[#05060b]">
+    <section data-tour="hero" className="relative overflow-hidden bg-[#05060b]">
       <div className="aurora-bg absolute inset-0" />
       <Container className="relative flex min-h-[80vh] flex-col items-start justify-center gap-10 py-24 lg:flex-row lg:items-center lg:justify-between">
         <div className="space-y-8">

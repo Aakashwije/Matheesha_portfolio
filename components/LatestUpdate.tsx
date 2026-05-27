@@ -103,7 +103,7 @@ export default function LatestUpdate({
   }
 
   return (
-    <section className="bg-[#05060b] py-16">
+    <section data-tour="latest-update" className="bg-[#05060b] py-16">
       <Container>{inner}</Container>
     </section>
   );

@@ -48,7 +48,7 @@ export default function VideoShowcase({
   const [activeVideo, setActiveVideo] = useState<VideoItem | null>(null);
 
   return (
-    <section className="bg-[#05060b] py-16">
+    <section data-tour="videos" className="bg-[#05060b] py-16">
       <Container className="space-y-10">
         <SectionHeading
           eyebrow={copy.eyebrow}
