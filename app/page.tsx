@@ -1,4 +1,5 @@
 import Hero from "@/components/Hero";
+import Bio from "@/components/Bio";
 import LatestUpdate from "@/components/LatestUpdate";
 import Stats from "@/components/Stats";
 import Podium from "@/components/Podium";
@@ -15,6 +16,7 @@ export default async function Home() {
   return (
     <div className="bg-[#05060b] text-white">
       <Hero content={content.hero} />
+      <Bio />
       <Stats items={content.stats} copy={content.sectionCopy.homeStats} />
       <LatestUpdate content={content.latestUpdate} />
       <Podium
