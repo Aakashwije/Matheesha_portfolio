@@ -12,6 +12,7 @@ import {
   SUPABASE_BUCKET,
 } from "@/lib/supabaseAdmin";
 import { getAdminEmailFromRequest } from "@/lib/adminAuth";
+import { revalidatePath } from "next/cache";
 
 export const dynamic = "force-dynamic";
 
@@ -75,6 +76,8 @@ export async function POST(request) {
       .from(SUPABASE_BUCKET)
       .getPublicUrl(objectPath);
 
+    revalidatePath("/", "layout");
+
     return Response.json({
       ok: true,
       file: {
@@ -92,6 +95,7 @@ export async function POST(request) {
 
   const destination = path.join(absolute, fileName);
   await fs.writeFile(destination, bytes);
+  revalidatePath("/", "layout");
 
   return Response.json({
     ok: true,
@@ -119,5 +123,6 @@ export async function DELETE(request) {
   }
 
   await deletePublicAsset(group, name, source);
+  revalidatePath("/", "layout");
   return Response.json({ ok: true });
 }

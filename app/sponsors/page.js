@@ -1,9 +1,10 @@
 import Container from "@/components/Container";
 import PrimaryButton from "@/components/PrimaryButton";
 import SectionHeading from "@/components/SectionHeading";
+import WurthPartnership from "@/components/WurthPartnership";
 import { getEditableContent } from "@/lib/content";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
 
 function MotionDiv({ initial, whileInView, viewport, transition, ...props }) {
   void initial;
@@ -19,6 +20,7 @@ export default async function Sponsors() {
 
   return (
     <div className="bg-[#05060b]">
+      <WurthPartnership showGallery />
       <section className="py-16">
         <Container className="space-y-10">
           <SectionHeading

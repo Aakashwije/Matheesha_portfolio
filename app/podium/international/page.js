@@ -3,7 +3,7 @@ import Container from "@/components/Container";
 import SectionHeading from "@/components/SectionHeading";
 import { getPublicAssets } from "@/lib/content";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
 
 export default async function InternationalPodium() {
   const foreignImages = await getPublicAssets("internationalPodium");

@@ -5,17 +5,21 @@ import Stats from "@/components/Stats";
 import Podium from "@/components/Podium";
 import VideoShowcase from "@/components/VideoShowcase";
 import Newspaper from "@/components/Newspaper";
+import WurthPartnership from "@/components/WurthPartnership";
 import { getEditableContent, getPublicAssets } from "@/lib/content";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
 
 export default async function Home() {
-  const content = await getEditableContent();
-  const videos = await getPublicAssets("videos");
+  const [content, videos] = await Promise.all([
+    getEditableContent(),
+    getPublicAssets("videos"),
+  ]);
 
   return (
     <div className="bg-[#05060b] text-white">
       <Hero content={content.hero} />
+      <WurthPartnership />
       <Bio />
       <Stats items={content.stats} copy={content.sectionCopy.homeStats} />
       <LatestUpdate content={content.latestUpdate} />

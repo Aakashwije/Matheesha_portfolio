@@ -70,7 +70,8 @@ export default function VideoShowcase({
               <video
                 className="h-full w-full scale-105 blur-sm transition duration-500 group-hover:blur-0 group-hover:scale-100"
                 src={video.src}
-                preload="metadata"
+                poster="/assets/vedios/video-poster.jpg"
+                preload="none"
               >
                 <track
                   kind="captions"

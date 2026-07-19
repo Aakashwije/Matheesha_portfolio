@@ -31,7 +31,7 @@ export default function SplashScreen() {
       <div className="flex flex-col items-center gap-6">
         <div className="rounded-full border border-white/10 bg-white/5 p-8 shadow-2xl shadow-black/40">
           <Image
-            src="/matheesha_logo.png?v=4"
+            src="/matheesha_logo-256.png"
             alt="Matheesha Wijesekara"
             width={260}
             height={260}

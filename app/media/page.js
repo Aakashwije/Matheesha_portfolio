@@ -4,12 +4,14 @@ import SectionHeading from "@/components/SectionHeading";
 import MediaCard from "@/components/MediaCard";
 import { getEditableContent, getPublicAssets } from "@/lib/content";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
 
 export default async function Media() {
-  const content = await getEditableContent();
+  const [content, mediaAssets] = await Promise.all([
+    getEditableContent(),
+    getPublicAssets("media"),
+  ]);
   const copy = content.sectionCopy.homeMedia;
-  const mediaAssets = await getPublicAssets("media");
   const mediaImages = mediaAssets.filter(
     (asset) => !asset.name.toLowerCase().endsWith(".pdf"),
   );

@@ -3,11 +3,13 @@ import Container from "@/components/Container";
 import SectionHeading from "@/components/SectionHeading";
 import { getEditableContent, getPublicAssets } from "@/lib/content";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
 
 export default async function InternationalGallery() {
-  const foreignImages = await getPublicAssets("internationalGallery");
-  const { sectionCopy } = await getEditableContent();
+  const [foreignImages, { sectionCopy }] = await Promise.all([
+    getPublicAssets("internationalGallery"),
+    getEditableContent(),
+  ]);
   const copy = sectionCopy.internationalGallery;
 
   return (

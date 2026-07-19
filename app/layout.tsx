@@ -2,7 +2,6 @@ import CustomCursor from "@/components/CustomCursor";
 import Footer from "@/components/Footer";
 import GoToTopButton from "@/components/GoToTopButton";
 import Navbar from "@/components/Navbar";
-import SplashScreen from "@/components/SplashScreen";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -18,12 +17,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Matheesha Wijesekara | Sri Lankan Squash Athlete",
+  title: "Matheesha Wijesekara | Squash Athlete & Würth Lanka Ambassador",
   description:
-    "Professional squash portfolio for Matheesha Wijesekara, Sri Lanka's top U19 athlete.",
+    "Official portfolio of Sri Lankan squash athlete Matheesha Wijesekara, appointed Executive Brand Ambassador for Würth Lanka in 2026.",
   icons: {
-    icon: "/matheesha_logo.png?v=4",
-    apple: "/matheesha_logo.png?v=4",
+    icon: "/matheesha_logo-256.png",
+    apple: "/matheesha_logo-256.png",
   },
 };
 
@@ -39,7 +38,6 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} bg-[#05060b] text-white antialiased`}
       >
         <CustomCursor />
-        <SplashScreen />
         <Navbar />
         <main>{children}</main>
         <Footer />

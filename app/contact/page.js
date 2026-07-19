@@ -2,7 +2,7 @@ import Container from "@/components/Container";
 import SectionHeading from "@/components/SectionHeading";
 import { getEditableContent } from "@/lib/content";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
 
 export default async function Contact() {
   const { contactCards, sectionCopy } = await getEditableContent();

@@ -4,11 +4,13 @@ import SectionHeading from "@/components/SectionHeading";
 import { getEditableContent, getPublicAssets } from "@/lib/content";
 import Image from "next/image";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
 
 export default async function LocalPodium() {
-  const localImages = await getPublicAssets("localPodium");
-  const { latestUpdate } = await getEditableContent();
+  const [localImages, { latestUpdate }] = await Promise.all([
+    getPublicAssets("localPodium"),
+    getEditableContent(),
+  ]);
 
   return (
     <section className="bg-[#05060b] py-16">

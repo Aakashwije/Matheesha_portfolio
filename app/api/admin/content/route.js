@@ -5,6 +5,7 @@ import {
   saveEditableContent,
 } from "@/lib/content";
 import { getAdminEmailFromRequest } from "@/lib/adminAuth";
+import { revalidatePath } from "next/cache";
 
 export const dynamic = "force-dynamic";
 
@@ -31,6 +32,7 @@ export async function PUT(request) {
 
   const content = await request.json();
   await saveEditableContent(content);
+  revalidatePath("/", "layout");
 
   return Response.json({ ok: true, content });
 }

@@ -477,7 +477,7 @@ Supabase is used for two purposes:
 1. **Content persistence** — site content is stored in a `site_content` PostgreSQL table as a single JSONB document, so edits survive deploys.
 2. **Asset storage** — uploaded images, PDFs, and videos are stored in the `portfolio-assets` Supabase Storage bucket and served from the CDN.
 
-> When Supabase env vars are **not** set, the app falls back to the local filesystem (`data/siteContent.json` + `public/assets/`) automatically — no code changes needed.
+> Supabase is opt-in. Unless `SUPABASE_ENABLED=true` and all server credentials are present, the app uses the fast local fallback (`data/siteContent.json` + `public/assets/`).
 
 ### Database Schema
 
@@ -603,6 +603,7 @@ Open [http://localhost:3000](http://localhost:3000) for the public site, or [htt
 Create a `.env.local` file at the project root:
 
 ```env
+SUPABASE_ENABLED=true
 NEXT_PUBLIC_SUPABASE_URL=https://your-project-ref.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
@@ -610,11 +611,12 @@ SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
 
 | Variable | Required | Purpose |
 |---|---|---|
+| `SUPABASE_ENABLED` | Optional | Set to `true` only when the configured Supabase project is active |
 | `NEXT_PUBLIC_SUPABASE_URL` | Optional* | Supabase project URL |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Optional* | Public anon key for client-side reads |
 | `SUPABASE_SERVICE_ROLE_KEY` | Optional* | Service role key for server-side writes |
 
-> \* When omitted, the app falls back to local filesystem storage automatically.
+> \* Unless Supabase is explicitly enabled with valid credentials, the app falls back to local filesystem storage automatically.
 
 > **Never commit `.env.local` to version control.** It is already in `.gitignore`.
 

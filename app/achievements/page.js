@@ -3,7 +3,14 @@ import SectionHeading from "@/components/SectionHeading";
 import Timeline from "@/components/Timeline";
 import { getEditableContent } from "@/lib/content";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
+
+const wurthAppointment = {
+  year: "2026",
+  title: "Executive Brand Ambassador for Würth Lanka",
+  description:
+    "Appointed Executive Brand Ambassador for Würth Lanka, marking a new chapter founded on performance, discipline, and excellence.",
+};
 
 function MotionDiv({ initial, whileInView, viewport, transition, ...props }) {
   void initial;
@@ -47,7 +54,7 @@ export default async function Achievements() {
             title={copy.title}
             subtitle={copy.subtitle}
           />
-          <Timeline items={achievementsTimeline} />
+          <Timeline items={[wurthAppointment, ...achievementsTimeline]} />
         </Container>
       </section>
 
