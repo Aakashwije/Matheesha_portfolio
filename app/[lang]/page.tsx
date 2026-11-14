@@ -11,6 +11,7 @@ import { getEditableContent, getPublicAssets } from "@/lib/content";
 import { resolveLocale } from "@/lib/i18n/config";
 import { getDictionary } from "@/lib/i18n/dictionaries";
 import { getTrackerData } from "@/lib/records";
+import { profilePageJsonLd } from "@/lib/seo";
 
 export const revalidate = 300;
 
@@ -22,9 +23,14 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
     getPublicAssets("videos"),
     getTrackerData(),
   ]);
+  const profilePage = profilePageJsonLd(lang);
 
   return (
     <div className="bg-[#05060b] text-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(profilePage).replace(/</g, "\\u003c") }}
+      />
       <Hero content={content.hero} lang={lang} />
       <WurthPartnership lang={lang} dict={dict.wurth} />
       <Bio dict={dict.bio} />
