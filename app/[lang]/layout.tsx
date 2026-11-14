@@ -5,7 +5,6 @@ import GoToTopButton from "@/components/GoToTopButton";
 import Navbar from "@/components/Navbar";
 import { getDictionary } from "@/lib/i18n/dictionaries";
 import { localeNames, locales, resolveLocale, siteUrl } from "@/lib/i18n/config";
-import { getEditableContent } from "@/lib/content";
 import { pageMetadata, personJsonLd } from "@/lib/seo";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Noto_Sans_Sinhala, Noto_Sans_Tamil } from "next/font/google";
@@ -69,8 +68,7 @@ export default async function RootLayout({
   }
   const lang = resolveLocale(rawLang);
   const dict = getDictionary(lang);
-  const content = await getEditableContent(lang);
-  const jsonLd = personJsonLd(content);
+  const jsonLd = personJsonLd();
 
   return (
     <html lang={localeNames[lang].htmlLang}>

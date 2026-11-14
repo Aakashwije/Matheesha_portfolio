@@ -3,7 +3,7 @@ import { siteUrl } from "@/lib/i18n/config";
 
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: [{ userAgent: "*", allow: "/", disallow: ["/admin", "/api/"] }],
+    rules: [{ userAgent: "*", allow: ["/", "/api/og"], disallow: ["/admin", "/api/"] }],
     sitemap: `${siteUrl}/sitemap.xml`,
   };
 }

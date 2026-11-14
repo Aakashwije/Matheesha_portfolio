@@ -58,7 +58,7 @@ This portfolio is Matheesha's digital presence for sponsors, media organisations
 
 ## Live Demo
 
-> Deployed on Vercel — visit **[matheesha.vercel.app](https://matheesha.vercel.app)** _(update with your production URL)_
+> Deployed on Vercel — visit **[matheeshawijesekara.com](https://matheeshawijesekara.com)**
 
 ---
 
@@ -625,7 +625,6 @@ Optional variables for the growth features:
 | `ADMIN_PASSWORD_HASH` | **Required for /admin.** scrypt hash of the admin password — set it with `node scripts/set-admin-password.mjs` (run in a normal terminal) |
 | `ADMIN_AUTH_SECRET` | **Required for /admin.** Random 32+ character secret that signs admin sessions (the script above creates one). Changing it logs everyone out |
 | `ADMIN_EMAILS` | Comma-separated admin email allow-list (defaults to the two existing admin emails) |
-| `NEXT_PUBLIC_SITE_URL` | Production URL used for canonical links, the sitemap and share cards (defaults to `https://matheesha.vercel.app`) |
 | `ANTHROPIC_API_KEY` | Enables the "Ask Matheesha" assistant. The widget is only rendered when this is set **at build time** — redeploy after adding it |
 | `RESEND_API_KEY` | Emails each new sponsor enquiry via [Resend](https://resend.com) |
 | `ENQUIRY_NOTIFY_EMAIL` | Comma-separated recipients for enquiry emails |
@@ -636,7 +635,7 @@ Optional variables for the growth features:
 | Feature | Where | Notes |
 |---|---|---|
 | Sinhala / Tamil | `/si/...`, `/ta/...` | UI strings in `lib/i18n/dictionaries.ts`; section copy and hero in `lib/i18n/contentTranslations.js`, overridable from Admin → Advanced → `translations`. English stays at the root. |
-| SEO | `app/sitemap.ts`, `app/robots.ts`, `app/api/og` | hreflang alternates, canonical URLs, Person JSON-LD, branded share card |
+| SEO | `app/sitemap.ts`, `app/robots.ts`, `app/api/og` | Production-domain canonicals, hreflang alternates, Person/ProfilePage JSON-LD, branded share card |
 | Media kit | `/api/media-kit` | PDF built on request from live rankings, results, packages and impact figures |
 | Sponsor enquiries | `/contact#enquire` | Stored in `sponsor_enquiries`; managed in Admin → Enquiries |
 | Rankings tracker | Home page | `ranking_history` + `tournaments` tables; Admin → Rankings & Results |

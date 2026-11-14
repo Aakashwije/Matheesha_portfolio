@@ -42,6 +42,5 @@ export function stripLocale(pathname: string) {
   return pathname.slice(match[0].length) || "/";
 }
 
-export const siteUrl = (
-  process.env.NEXT_PUBLIC_SITE_URL || "https://matheesha.vercel.app"
-).replace(/\/$/, "");
+// Canonicals stay pinned to the verified production origin on previews too.
+export const siteUrl = "https://matheeshawijesekara.com";

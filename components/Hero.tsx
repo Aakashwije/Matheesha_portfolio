@@ -46,7 +46,7 @@ export default function Hero({
             transition={{ delay: 0.1 }}
             className="max-w-3xl text-4xl font-semibold leading-tight text-white md:text-6xl"
           >
-            {content.title}{" "}
+            {lang === "en" ? content.title : "Matheesha Wijesekara"}{" "}
             <span className="block text-yellow-400">{content.highlight}</span>
           </motion.h1>
           <motion.p
