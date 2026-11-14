@@ -4,7 +4,7 @@ import { localeNames, localizedHref, locales, siteUrl, type Locale } from "./i18
 export const siteName = "Matheesha Wijesekara";
 export const defaultTitle = "Matheesha Wijesekara | Squash Athlete & Würth Lanka Ambassador";
 export const defaultDescription =
-  "Official portfolio of Sri Lankan squash athlete Matheesha Wijesekara — National U19 #1, Asian Junior #7 and Executive Brand Ambassador for Würth Lanka.";
+  "Official portfolio of Sri Lankan squash athlete Matheesha Wijesekara — National U19 #1, among Asia’s Top 10 junior players for nine consecutive months, and Executive Brand Ambassador for Würth Lanka.";
 
 /** Public routes, used by the sitemap and hreflang alternates. */
 export const publicPaths = [
