@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import Container from "./Container";
+import { localizedHref, type Locale } from "@/lib/i18n/config";
+import type { Dictionary } from "@/lib/i18n/dictionaries";
 
 const gallery = [
   {
@@ -19,8 +21,12 @@ const gallery = [
 
 export default function WurthPartnership({
   showGallery = false,
+  lang,
+  dict,
 }: {
   showGallery?: boolean;
+  lang: Locale;
+  dict: Dictionary["wurth"];
 }) {
   return (
     <section className="overflow-hidden bg-[#0b0e17] py-16">
@@ -49,23 +55,20 @@ export default function WurthPartnership({
                 />
               </div>
               <p className="text-xs font-semibold uppercase tracking-[0.3em] text-red-400">
-                Official Appointment · 2026
+                {dict.eyebrow}
               </p>
               <h2 className="mt-4 text-3xl font-semibold leading-tight text-white md:text-4xl">
-                Executive Brand Ambassador for Würth Lanka
+                {dict.title}
               </h2>
               <p className="mt-5 text-base leading-7 text-slate-300">
-                Matheesha Wijesekara has been appointed Executive Brand
-                Ambassador for Würth Lanka in 2026, marking a proud new chapter
-                built on shared values of performance, discipline, and
-                excellence.
+                {dict.body}
               </p>
               {!showGallery ? (
                 <Link
-                  href="/sponsors"
+                  href={localizedHref(lang, "/sponsors")}
                   className="mt-8 inline-flex w-fit items-center rounded-full border border-red-400/60 px-5 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-red-300 transition hover:bg-red-500 hover:text-white"
                 >
-                  View the partnership
+                  {dict.cta}
                 </Link>
               ) : null}
             </div>
@@ -97,7 +100,7 @@ export default function WurthPartnership({
                 rel="noopener noreferrer"
                 className="inline-flex items-center rounded-full border border-red-400/60 px-6 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-red-300 transition hover:bg-red-500 hover:text-white"
               >
-                View more photos on ThePapare&nbsp;↗
+                {dict.morePhotos}&nbsp;↗
               </a>
             </div>
           </div>

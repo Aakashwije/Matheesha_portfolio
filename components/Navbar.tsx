@@ -1,18 +1,50 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Link from "next/link";
 import Container from "./Container";
-import { navLinks } from "@/lib/siteData";
+import LanguageSwitcher from "./LanguageSwitcher";
+import { localizedHref, type Locale } from "@/lib/i18n/config";
+import type { Dictionary } from "@/lib/i18n/dictionaries";
 
-export default function Navbar() {
+type NavLink = { href: string; label: string; children?: NavLink[] };
+
+function buildNavLinks(lang: Locale, dict: Dictionary["nav"]): NavLink[] {
+  const href = (path: string) => localizedHref(lang, path);
+  return [
+    { href: href("/"), label: dict.home },
+    { href: href("/achievements"), label: dict.achievements },
+    {
+      href: href("/gallery/local"),
+      label: dict.gallery,
+      children: [
+        { href: href("/gallery/local"), label: dict.local },
+        { href: href("/gallery/international"), label: dict.international },
+        { href: href("/gallery/school"), label: dict.school },
+      ],
+    },
+    {
+      href: href("/podium/local"),
+      label: dict.podium,
+      children: [
+        { href: href("/podium/local"), label: dict.local },
+        { href: href("/podium/international"), label: dict.international },
+      ],
+    },
+    { href: href("/media"), label: dict.media },
+  ];
+}
+
+export default function Navbar({ lang, dict }: { lang: Locale; dict: Dictionary["nav"] }) {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const navLinks = useMemo(() => buildNavLinks(lang, dict), [lang, dict]);
+  const sponsorHref = localizedHref(lang, "/sponsors");
 
   return (
   <header className="animate-slide-down sticky top-0 z-30 border-b border-white/10 bg-[#05060b]/80 backdrop-blur">
       <Container className="flex items-center justify-between py-5">
-        <Link href="/" className="text-lg font-semibold text-white">
+        <Link href={localizedHref(lang, "/")} className="text-lg font-semibold text-white">
           Matheesha <span className="text-yellow-400">Wijesekara</span>
         </Link>
         <button
@@ -22,7 +54,7 @@ export default function Navbar() {
           aria-expanded={mobileOpen}
           aria-controls="mobile-nav"
         >
-          <span>Menu</span>
+          <span>{dict.menu}</span>
           <span className="text-base">{mobileOpen ? "✕" : "☰"}</span>
         </button>
         <nav className="hidden items-center gap-6 text-sm uppercase tracking-[0.2em] text-slate-300 md:flex">
@@ -82,12 +114,15 @@ export default function Navbar() {
             );
           })}
         </nav>
-        <Link
-          href="/sponsors"
-          className="hidden rounded-full border border-yellow-400/60 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-yellow-400 transition hover:bg-yellow-400 hover:text-black md:inline-flex"
-        >
-          Sponsor
-        </Link>
+        <div className="hidden items-center gap-3 md:flex">
+          <LanguageSwitcher lang={lang} label={dict.language} />
+          <Link
+            href={sponsorHref}
+            className="inline-flex rounded-full border border-yellow-400/60 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-yellow-400 transition hover:bg-yellow-400 hover:text-black"
+          >
+            {dict.sponsor}
+          </Link>
+        </div>
       </Container>
       <div
         id="mobile-nav"
@@ -142,12 +177,13 @@ export default function Navbar() {
               </Link>
             )
           )}
+          <LanguageSwitcher lang={lang} label={dict.language} variant="inline" />
           <Link
-            href="/sponsors"
+            href={sponsorHref}
             className="mt-3 inline-flex w-full items-center justify-center rounded-full border border-yellow-400/60 px-4 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-yellow-400 transition hover:bg-yellow-400 hover:text-black"
             onClick={() => setMobileOpen(false)}
           >
-            Sponsor
+            {dict.sponsor}
           </Link>
         </div>
       </div>

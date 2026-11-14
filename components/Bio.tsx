@@ -3,42 +3,50 @@
 import { motion } from "framer-motion";
 import Container from "./Container";
 import SectionHeading from "./SectionHeading";
+import type { Dictionary } from "@/lib/i18n/dictionaries";
 
-const profile = [
-  { label: "Date of Birth", value: "18 February 2008" },
-  { label: "Height", value: "5′ 5″" },
-  { label: "Weight", value: "58 kg" },
-  { label: "Dominant Hand", value: "Right" },
-];
+function getProfile(dict: Dictionary["bio"]) {
+  return [
+    { label: dict.dob, value: dict.dobValue },
+    { label: dict.height, value: "5′ 5″" },
+    { label: dict.weight, value: "58 kg" },
+    { label: dict.hand, value: dict.handValue },
+  ];
+}
 
-const team = [
-  {
-    role: "Personal Coach",
-    name: "Shamil Wakeel",
-    phone: "+94 76 473 0162",
-  },
-  {
-    role: "College Coach",
-    name: "Rahim Deen",
-    phone: "+94 71 439 3351",
-  },
-  {
-    role: "Physical Fitness Trainer",
-    name: "Thushara Kumara",
-    phone: "+94 77 839 1491",
-  },
-];
+function getTeam(dict: Dictionary["bio"]) {
+  return [
+    {
+      role: dict.personalCoach,
+      name: "Shamil Wakeel",
+      phone: "+94 76 473 0162",
+    },
+    {
+      role: dict.collegeCoach,
+      name: "Rahim Deen",
+      phone: "+94 71 439 3351",
+    },
+    {
+      role: dict.fitnessTrainer,
+      name: "Thushara Kumara",
+      phone: "+94 77 839 1491",
+    },
+  ];
+}
 
 const telHref = (phone: string) => `tel:${phone.replace(/\s+/g, "")}`;
 
-export default function Bio() {
+export default function Bio({ dict }: { dict: Dictionary["bio"] }) {
+  const profile = getProfile(dict);
+  const team = getTeam(dict);
+
   return (
     <section className="bg-[#05060b] py-16">
       <Container className="space-y-10">
         <SectionHeading
-          eyebrow="Profile"
-          title="About Matheesha"
-          subtitle="Key stats and the team behind the athlete."
+          eyebrow={dict.eyebrow}
+          title={dict.title}
+          subtitle={dict.subtitle}
         />
 
         <div className="grid gap-6 lg:grid-cols-2">
@@ -50,10 +58,10 @@ export default function Bio() {
             className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 md:p-8"
           >
             <p className="text-xs font-semibold uppercase tracking-[0.3em] text-yellow-400">
-              Athlete
+              {dict.athlete}
             </p>
             <h3 className="mt-2 text-2xl font-semibold text-white">
-              Personal Details
+              {dict.personalDetails}
             </h3>
             <dl className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
               {profile.map((item) => (
@@ -80,10 +88,10 @@ export default function Bio() {
             className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 md:p-8"
           >
             <p className="text-xs font-semibold uppercase tracking-[0.3em] text-yellow-400">
-              Support Team
+              {dict.supportTeam}
             </p>
             <h3 className="mt-2 text-2xl font-semibold text-white">
-              Coaches & Trainers
+              {dict.coaches}
             </h3>
             <ul className="mt-6 space-y-3">
               {team.map((member) => (

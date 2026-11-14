@@ -9,8 +9,14 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--font-geist-sans), var(--font-script, system-ui), system-ui, sans-serif;
   cursor: none;
+}
+
+/* Wide letter-spacing breaks Sinhala/Tamil conjunct shaping. */
+html:lang(si) [class*="tracking-"],
+html:lang(ta) [class*="tracking-"] {
+  letter-spacing: 0.01em !important;
 }
 
 @media (pointer: coarse) {

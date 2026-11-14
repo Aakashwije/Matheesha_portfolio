@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  serverExternalPackages: ["@react-pdf/renderer"],
   images: {
     localPatterns: [
       {
@@ -24,7 +25,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "hznkmvknrmndksjuhtpq.supabase.co",
+        hostname: "ulmdmvjzzvlanotmusmw.supabase.co",
       },
     ],
   },

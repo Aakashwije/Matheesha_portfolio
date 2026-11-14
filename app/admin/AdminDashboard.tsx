@@ -3,10 +3,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import {
+  BarChart3,
   BookOpen,
   FileText,
   Home,
   ImageUp,
+  Inbox,
+  LineChart,
   Loader2,
   LogOut,
   Mail,
@@ -22,6 +25,7 @@ import {
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import RecordsManager from "./RecordsManager";
 
 type FieldConfig = {
   key: string;
@@ -49,6 +53,9 @@ const navItems = [
   { id: "podium", label: "Podium", icon: Medal },
   { id: "media", label: "Media", icon: Newspaper },
   { id: "sponsors", label: "Sponsors", icon: BookOpen },
+  { id: "tracker", label: "Rankings & Results", icon: LineChart },
+  { id: "impact", label: "Sponsor Impact", icon: BarChart3 },
+  { id: "enquiries", label: "Enquiries", icon: Inbox },
   { id: "contact", label: "Contact", icon: Mail },
   { id: "advanced", label: "Advanced", icon: Settings },
 ];
@@ -151,7 +158,11 @@ const advancedSections = [
   "academicProfile",
   "galleryImages",
   "contactCards",
+  "translations",
 ];
+
+// Tabs backed by their own tables; each row saves itself.
+const recordSections = new Set(["tracker", "impact", "enquiries"]);
 
 const emptyByCollection: Record<string, Record<string, string>> =
   Object.fromEntries(
@@ -604,6 +615,7 @@ export default function AdminDashboard() {
               type="button"
               onClick={() => saveContent()}
               disabled={saving}
+              hidden={recordSections.has(activeSection)}
               className="inline-flex items-center justify-center gap-2 rounded-lg bg-yellow-400 px-5 py-3 text-sm font-bold uppercase tracking-wide text-black transition hover:bg-yellow-300 disabled:opacity-60"
             >
               {saving ? <Loader2 size={18} className="animate-spin" /> : <Save size={18} />}
@@ -735,6 +747,39 @@ export default function AdminDashboard() {
                   onChange={updateSponsorPackage}
                 />
               </>
+            ) : null}
+
+            {activeSection === "tracker" ? (
+              <>
+                <RecordsManager
+                  table="tournaments"
+                  title="Tournaments"
+                  description="Upcoming tournaments drive the countdown on the home page; completed ones appear under Recent Results and in the media kit."
+                />
+                <RecordsManager
+                  table="ranking_history"
+                  title="Ranking History"
+                  description="Add a row each time a ranking list is published. Entries with the same category form one trend chart."
+                />
+              </>
+            ) : null}
+
+            {activeSection === "impact" ? (
+              <RecordsManager
+                table="sponsor_exposure"
+                title="Sponsor Exposure per Event"
+                description="Shown publicly on /sponsors/impact and summed in the media kit. Only enter figures you can back up (organiser numbers, platform analytics)."
+              />
+            ) : null}
+
+            {activeSection === "enquiries" ? (
+              <RecordsManager
+                table="sponsor_enquiries"
+                title="Sponsor Enquiries"
+                description="Submitted from the contact page. Update the status as you follow up."
+                editable={["status"]}
+                allowCreate={false}
+              />
             ) : null}
 
             {activeSection === "contact" ? (

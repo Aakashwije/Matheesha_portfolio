@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Container from "./Container";
 import PrimaryButton from "./PrimaryButton";
+import { localizedHref, type Locale } from "@/lib/i18n/config";
 
 const fallbackHero = {
   eyebrow: "Sri Lanka • Squash • Elite Performance",
@@ -20,7 +21,13 @@ const fallbackHero = {
 
 type HeroContent = typeof fallbackHero;
 
-export default function Hero({ content = fallbackHero }: { content?: HeroContent }) {
+export default function Hero({
+  content = fallbackHero,
+  lang = "en",
+}: {
+  content?: HeroContent;
+  lang?: Locale;
+}) {
   return (
     <section className="relative overflow-hidden bg-[#05060b]">
       <div className="aurora-bg absolute inset-0" />
@@ -56,11 +63,11 @@ export default function Hero({ content = fallbackHero }: { content?: HeroContent
             transition={{ delay: 0.3 }}
             className="flex flex-wrap gap-4"
           >
-            <PrimaryButton href={content.primaryCtaHref}>
+            <PrimaryButton href={localizedHref(lang, content.primaryCtaHref)}>
               {content.primaryCtaLabel}
             </PrimaryButton>
             <a
-              href={content.secondaryCtaHref}
+              href={localizedHref(lang, content.secondaryCtaHref)}
               className="inline-flex items-center justify-center rounded-full border border-white/20 px-6 py-3 text-sm font-semibold uppercase tracking-wide text-white transition hover:border-yellow-400 hover:text-yellow-400"
             >
               {content.secondaryCtaLabel}
@@ -75,7 +82,7 @@ export default function Hero({ content = fallbackHero }: { content?: HeroContent
         >
           <Image
             src={content.image}
-            alt="Matheesha profile"
+            alt="Matheesha Wijesekara, Sri Lankan squash athlete"
             width={440}
             height={440}
             className="animate-float-soft h-80 w-80 rounded-3xl border border-white/20 bg-black/20 object-contain p-2 shadow-2xl shadow-black/50 sm:h-96 sm:w-96"
