@@ -18,6 +18,7 @@ const videoFiles = [
 type VideoItem = {
   name: string;
   src: string;
+  poster?: string;
 };
 
 type SectionCopy = {
@@ -29,6 +30,7 @@ type SectionCopy = {
 const fallbackVideos = videoFiles.map((file) => ({
   name: file,
   src: `/assets/vedios/${encodeURIComponent(file)}`,
+  poster: `/assets/vedios/posters/${encodeURIComponent(file.replace(/\.mp4$/, ".jpg"))}`,
 }));
 
 const fallbackCopy = {
@@ -41,9 +43,11 @@ const fallbackCopy = {
 export default function VideoShowcase({
   videos = fallbackVideos,
   copy = fallbackCopy,
+  labels = { play: "Play", close: "Close" },
 }: {
   videos?: VideoItem[];
   copy?: SectionCopy;
+  labels?: { play: string; close: string };
 }) {
   const [activeVideo, setActiveVideo] = useState<VideoItem | null>(null);
 
@@ -70,7 +74,7 @@ export default function VideoShowcase({
               <video
                 className="h-full w-full scale-105 blur-sm transition duration-500 group-hover:blur-0 group-hover:scale-100"
                 src={video.src}
-                poster="/assets/vedios/video-poster.jpg"
+                poster={video.poster ?? "/assets/vedios/video-poster.jpg"}
                 preload="none"
               >
                 <track
@@ -83,7 +87,7 @@ export default function VideoShowcase({
               </video>
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="rounded-full border border-white/40 bg-black/50 px-4 py-2 text-xs uppercase tracking-[0.3em] text-white opacity-0 transition group-hover:opacity-100">
-                  Play
+                  {labels.play}
                 </div>
               </div>
             </motion.button>
@@ -111,8 +115,10 @@ export default function VideoShowcase({
                 <video
                   controls
                   autoPlay
+                  playsInline
                   className="h-full w-full"
                   src={activeVideo.src}
+                  poster={activeVideo.poster}
                 >
                   <track
                     kind="captions"
@@ -132,7 +138,7 @@ export default function VideoShowcase({
                   onClick={() => setActiveVideo(null)}
                   className="rounded-full border border-white/20 px-4 py-2 text-xs uppercase tracking-[0.2em] text-white transition hover:border-yellow-400 hover:text-yellow-400"
                 >
-                  Close
+                  {labels.close}
                 </button>
               </div>
             </motion.div>

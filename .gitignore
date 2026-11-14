@@ -42,3 +42,6 @@ supabase/.temp/
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# sponsor enquiries saved locally when Supabase is off (personal data)
+/data/sponsor_enquiries.json

@@ -618,6 +618,34 @@ SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
 
 > \* Unless Supabase is explicitly enabled with valid credentials, the app falls back to local filesystem storage automatically.
 
+Optional variables for the growth features:
+
+| Variable | Purpose |
+|---|---|
+| `ADMIN_PASSWORD_HASH` | **Required for /admin.** scrypt hash of the admin password — set it with `node scripts/set-admin-password.mjs` (run in a normal terminal) |
+| `ADMIN_AUTH_SECRET` | **Required for /admin.** Random 32+ character secret that signs admin sessions (the script above creates one). Changing it logs everyone out |
+| `ADMIN_EMAILS` | Comma-separated admin email allow-list (defaults to the two existing admin emails) |
+| `NEXT_PUBLIC_SITE_URL` | Production URL used for canonical links, the sitemap and share cards (defaults to `https://matheesha.vercel.app`) |
+| `ANTHROPIC_API_KEY` | Enables the "Ask Matheesha" assistant. The widget is only rendered when this is set **at build time** — redeploy after adding it |
+| `RESEND_API_KEY` | Emails each new sponsor enquiry via [Resend](https://resend.com) |
+| `ENQUIRY_NOTIFY_EMAIL` | Comma-separated recipients for enquiry emails |
+| `ENQUIRY_FROM_EMAIL` | Sender address on a Resend-verified domain (defaults to Resend's test sender) |
+
+### Growth features
+
+| Feature | Where | Notes |
+|---|---|---|
+| Sinhala / Tamil | `/si/...`, `/ta/...` | UI strings in `lib/i18n/dictionaries.ts`; section copy and hero in `lib/i18n/contentTranslations.js`, overridable from Admin → Advanced → `translations`. English stays at the root. |
+| SEO | `app/sitemap.ts`, `app/robots.ts`, `app/api/og` | hreflang alternates, canonical URLs, Person JSON-LD, branded share card |
+| Media kit | `/api/media-kit` | PDF built on request from live rankings, results, packages and impact figures |
+| Sponsor enquiries | `/contact#enquire` | Stored in `sponsor_enquiries`; managed in Admin → Enquiries |
+| Rankings tracker | Home page | `ranking_history` + `tournaments` tables; Admin → Rankings & Results |
+| Sponsor impact | `/sponsors/impact` | `sponsor_exposure` table; Admin → Sponsor Impact |
+
+Run `supabase/migrations/20261101000000_tracker_enquiries_impact.sql` (e.g. `supabase db push`) to create the new tables. Until then the site reads built-in seed data and admin saves to those tables fail with a clear message.
+
+To serve videos from Supabase Storage instead of the deployment bundle: `node --env-file=.env.local scripts/move-videos-to-supabase.mjs` (add `--remove-local` once the uploads are confirmed).
+
 > **Never commit `.env.local` to version control.** It is already in `.gitignore`.
 
 ---
