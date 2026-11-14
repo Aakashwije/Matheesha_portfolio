@@ -1,6 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
+import { ExternalLink } from "lucide-react";
 import { useState } from "react";
 import Container from "./Container";
 import SectionHeading from "./SectionHeading";
@@ -39,6 +40,13 @@ const fallbackCopy = {
   subtitle:
     "Quick clips that capture match intensity, training rhythm, and tournament momentum.",
 };
+
+const facebookVideos = [
+  "https://www.facebook.com/share/v/1EzRx5mUeP/",
+  "https://www.facebook.com/share/v/1CB6yCi65Q/",
+  "https://www.facebook.com/share/v/1GGEXcN78k/",
+  "https://www.facebook.com/share/v/1A4qDSosoP/",
+];
 
 export default function VideoShowcase({
   videos = fallbackVideos,
@@ -92,6 +100,27 @@ export default function VideoShowcase({
               </div>
             </motion.button>
           ))}
+        </div>
+        <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
+          <div className="mb-4">
+            <h3 className="text-lg font-semibold text-white">More match videos on Facebook</h3>
+            <p className="mt-1 text-sm text-white/55">Watch the original clips on Facebook.</p>
+          </div>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {facebookVideos.map((href, index) => (
+              <a
+                key={href}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-between gap-3 rounded-xl border border-white/10 bg-black/20 px-4 py-3 text-sm font-medium text-white transition hover:border-yellow-400/50 hover:text-yellow-300"
+                aria-label={`Watch Facebook video ${index + 1} in a new tab`}
+              >
+                <span>Facebook video {index + 1}</span>
+                <ExternalLink size={16} aria-hidden="true" />
+              </a>
+            ))}
+          </div>
         </div>
       </Container>
 
