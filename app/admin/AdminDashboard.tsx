@@ -99,7 +99,7 @@ const collectionFields: Record<string, FieldConfig[]> = {
     { key: "alt", label: "Alt Text" },
   ],
   latestUpdateCards: [
-    { key: "image", label: "Image file name" },
+    { key: "image", label: "Image file name (blank = highlight graphic)" },
     { key: "title", label: "Title" },
     { key: "badge", label: "Badge" },
     { key: "icon", label: "Icon: trophy or dumbbell" },
