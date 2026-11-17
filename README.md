@@ -313,7 +313,7 @@ sequenceDiagram
   participant CSS
 
   User->>Browser: lands on page
-  Browser->>CSS: SplashScreen mounts — logo-pulse + dot-bounce
+  Browser->>CSS: SplashScreen draws the "Matheesha" signature (first load only)
   Browser->>FramerMotion: template.tsx mounts
   FramerMotion->>Component: initial {opacity:0, y:10} → animate {opacity:1, y:0}
   Note over Component: Page fade-in transition

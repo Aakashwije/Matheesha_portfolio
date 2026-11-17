@@ -102,7 +102,7 @@ const collectionFields: Record<string, FieldConfig[]> = {
     { key: "image", label: "Image file name (blank = highlight graphic)" },
     { key: "title", label: "Title" },
     { key: "badge", label: "Badge" },
-    { key: "icon", label: "Icon: trophy or dumbbell" },
+    { key: "icon", label: "Icon: trophy, dumbbell or plane" },
     { key: "description", label: "Description", multiline: true },
   ],
   contactCards: [

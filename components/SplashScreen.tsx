@@ -1,56 +1,78 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Image from "next/image";
+import { AnimatePresence, motion, useIsPresent } from "framer-motion";
+import { useCallback, useEffect, useRef, useState } from "react";
 
-export default function SplashScreen() {
-  const [mounted, setMounted] = useState(false);
-  const [visible, setVisible] = useState(false);
+// Lives for the lifetime of the loaded JS bundle: a full page load plays the
+// splash, client-side navigations (including language switches) do not.
+let hasPlayed = false;
+
+const HOLD_MS = 600;
+const REDUCED_HOLD_MS = 1000;
+const FALLBACK_INTRO_MS = 3400;
+
+// The intro runs on CSS keyframes (see .splash-* in globals.css) so it starts
+// at first paint, before hydration; this only decides when to leave.
+function introRemaining(node: HTMLElement | null) {
+  if (!node || typeof node.getAnimations !== "function") return FALLBACK_INTRO_MS;
+  return Math.max(
+    0,
+    ...node.getAnimations({ subtree: true }).map((animation) => {
+      const end = Number(animation.effect?.getComputedTiming().endTime ?? 0);
+      return end - Number(animation.currentTime ?? 0);
+    }),
+  );
+}
+
+function Splash({ onDone }: { onDone: () => void }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const isPresent = useIsPresent();
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setMounted(true);
-  }, []);
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const timer = setTimeout(onDone, introRemaining(ref.current) + (reduced ? REDUCED_HOLD_MS : HOLD_MS));
 
-  useEffect(() => {
-    if (!mounted) {
-      return undefined;
-    }
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setVisible(true);
-    const timer = globalThis.setTimeout(() => setVisible(false), 8000);
-    return () => globalThis.clearTimeout(timer);
-  }, [mounted]);
-
-  if (!mounted || !visible) {
-    return null;
-  }
+    window.addEventListener("keydown", onDone);
+    window.addEventListener("pointerdown", onDone);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("keydown", onDone);
+      window.removeEventListener("pointerdown", onDone);
+    };
+  }, [onDone]);
 
   return (
-    <div className="fixed inset-0 z-100 flex items-center justify-center bg-[#05060b] text-white">
-      <div className="flex flex-col items-center gap-6">
-        <div className="rounded-full border border-white/10 bg-white/5 p-8 shadow-2xl shadow-black/40">
-          <Image
-            src="/matheesha_logo-256.png"
-            alt="Matheesha Wijesekara"
-            width={260}
-            height={260}
-            className="animate-logo-pulse h-60 w-60 object-contain"
-            priority
-          />
-        </div>
-        <div className="flex items-center gap-2 text-xs uppercase tracking-[0.4em] text-yellow-400">
-          <span>Loading</span>
-          <span className="flex items-center gap-1">
-            <span className="animate-dot h-2 w-2 rounded-full bg-yellow-400" />
-            <span className="animate-dot animate-dot-delay-1 h-2 w-2 rounded-full bg-yellow-400" />
-            <span className="animate-dot animate-dot-delay-2 h-2 w-2 rounded-full bg-yellow-400" />
-          </span>
-        </div>
-        <p className="text-center text-sm text-slate-300">
-          Proud alumnus of Royal College, Colombo 7
-        </p>
-      </div>
-    </div>
+    <motion.div
+      ref={ref}
+      className="splash-overlay"
+      aria-hidden={isPresent ? undefined : true}
+      style={isPresent ? undefined : { pointerEvents: "none" }}
+      exit={{ opacity: 0, filter: "blur(6px)" }}
+      transition={{ duration: 0.6, ease: "easeInOut" }}
+    >
+      <svg className="splash-signature" viewBox="0 0 1000 340" role="img" aria-label="Matheesha">
+        <text className="splash-name" x="500" y="215" textAnchor="middle">
+          Matheesha
+        </text>
+        <path
+          className="splash-swash"
+          d="M 190 268 C 330 300, 560 300, 700 262 S 860 232, 845 258"
+          pathLength={1}
+        />
+        <circle className="splash-dot" cx="872" cy="236" r="6" />
+      </svg>
+      <p className="splash-surname">WIJESEKARA</p>
+    </motion.div>
   );
+}
+
+export default function SplashScreen() {
+  const [visible, setVisible] = useState(!hasPlayed);
+  const dismiss = useCallback(() => setVisible(false), []);
+
+  useEffect(() => {
+    hasPlayed = true;
+  }, []);
+
+  return <AnimatePresence>{visible ? <Splash key="splash" onDone={dismiss} /> : null}</AnimatePresence>;
 }
