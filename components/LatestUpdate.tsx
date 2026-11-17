@@ -1,4 +1,4 @@
-import { CalendarDays, Dumbbell, MapPin, Trophy, type LucideIcon } from "lucide-react";
+import { CalendarDays, Dumbbell, MapPin, Plane, Trophy, type LucideIcon } from "lucide-react";
 import Image from "next/image";
 import Container from "./Container";
 
@@ -20,6 +20,7 @@ type LatestUpdateContent = {
 
 const icons = {
   dumbbell: Dumbbell,
+  plane: Plane,
   trophy: Trophy,
 };
 
