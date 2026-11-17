@@ -3,11 +3,12 @@ import CustomCursor from "@/components/CustomCursor";
 import Footer from "@/components/Footer";
 import GoToTopButton from "@/components/GoToTopButton";
 import Navbar from "@/components/Navbar";
+import SplashScreen from "@/components/SplashScreen";
 import { getDictionary } from "@/lib/i18n/dictionaries";
 import { localeNames, locales, resolveLocale, siteUrl } from "@/lib/i18n/config";
 import { pageMetadata, personJsonLd } from "@/lib/seo";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Noto_Sans_Sinhala, Noto_Sans_Tamil } from "next/font/google";
+import { Geist, Geist_Mono, Great_Vibes, Noto_Sans_Sinhala, Noto_Sans_Tamil } from "next/font/google";
 import { notFound } from "next/navigation";
 import "../globals.css";
 
@@ -19,6 +20,14 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+// Splash signature only; "block" avoids a fallback-font swap mid-draw.
+const greatVibes = Great_Vibes({
+  variable: "--font-signature",
+  weight: "400",
+  subsets: ["latin"],
+  display: "block",
 });
 
 const notoSinhala = Noto_Sans_Sinhala({
@@ -80,8 +89,9 @@ export default async function RootLayout({
     <html lang={localeNames[lang].htmlLang}>
       <body
         suppressHydrationWarning
-        className={`${geistSans.variable} ${geistMono.variable} ${scriptFonts[lang]} bg-[#05060b] text-white antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${greatVibes.variable} ${scriptFonts[lang]} bg-[#05060b] text-white antialiased`}
       >
+        <SplashScreen />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}

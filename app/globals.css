@@ -34,6 +34,123 @@ html:lang(ta) [class*="tracking-"] {
   scroll-behavior: smooth;
 }
 
+/* One-time signature splash (components/SplashScreen.tsx). Base styles are the
+   finished state; keyframes animate in from blank, so reduced motion just
+   drops the animations. */
+html:has(.splash-overlay),
+html:has(.splash-overlay) body {
+  overflow: hidden;
+}
+
+.splash-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--background);
+  cursor: pointer;
+}
+
+.splash-signature {
+  width: min(980px, 92vw);
+  height: auto;
+  overflow: visible;
+  animation: splash-reveal 0.3s ease-out both;
+}
+
+.splash-name {
+  font-family: var(--font-signature), cursive;
+  font-size: 230px;
+  fill: #ffffff;
+  stroke: #ffffff;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1800;
+  animation:
+    splash-draw 2s cubic-bezier(0.65, 0, 0.35, 1) both,
+    splash-fill 0.8s ease-out 1.6s both;
+}
+
+.splash-swash {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  animation: splash-swash 0.8s cubic-bezier(0.65, 0, 0.35, 1) 2s both;
+}
+
+.splash-dot {
+  fill: var(--accent);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: splash-pop 0.45s ease-out 2.8s both;
+}
+
+.splash-surname {
+  margin-top: 0.25rem;
+  padding-left: 0.5em; /* balances the trailing letter-spacing */
+  font-family: var(--font-geist-sans), sans-serif;
+  font-size: 13px;
+  font-weight: 300;
+  letter-spacing: 0.5em;
+  color: #cbd5e1;
+  animation: splash-rise 0.5s ease-out 2.9s both;
+}
+
+@keyframes splash-reveal {
+  from {
+    opacity: 0;
+    filter: blur(6px);
+  }
+}
+
+@keyframes splash-draw {
+  from {
+    stroke-dashoffset: 1800;
+  }
+}
+
+@keyframes splash-fill {
+  from {
+    fill-opacity: 0;
+  }
+}
+
+@keyframes splash-swash {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+
+@keyframes splash-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.2);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.3);
+  }
+}
+
+@keyframes splash-rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .splash-overlay * {
+    animation: none !important;
+  }
+}
+
 #__next-build-watcher,
 #__next-dev-indicator {
   display: none !important;
