@@ -243,6 +243,34 @@ export default function RankingTracker({
           <div className="space-y-4">
             <NextTournamentCountdown tournament={upcoming[0] ?? null} lang={lang} dict={dict} />
 
+            {upcoming.length > 1 ? (
+              <div className="rounded-2xl border border-yellow-400/20 bg-[#0b0e17] p-5">
+                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-yellow-400">{dict.comingUp}</p>
+                <ul className="mt-4 space-y-4">
+                  {upcoming.slice(1).map((t) => (
+                    <li key={t.id} className="flex gap-3">
+                      <CalendarDays size={16} className="mt-1 shrink-0 text-yellow-400" aria-hidden="true" />
+                      <div>
+                        <p className="text-sm font-semibold text-white">{t.name}</p>
+                        <p className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-400">
+                          <span>
+                            {formatDay(t.start_date, lang)}
+                            {t.end_date && t.end_date !== t.start_date ? ` – ${formatDay(t.end_date, lang)}` : ""}
+                          </span>
+                          {t.location ? (
+                            <span className="inline-flex items-center gap-1">
+                              <MapPin size={12} aria-hidden="true" />
+                              {t.location}
+                            </span>
+                          ) : null}
+                        </p>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
+
             {completed.length ? (
               <div className="rounded-2xl border border-white/10 bg-[#0b0e17] p-5">
                 <p className="text-xs font-semibold uppercase tracking-[0.3em] text-yellow-400">{dict.recentResults}</p>
